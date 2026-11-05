@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carte de la pédagogie</title>
+<meta name="description" content="Carte mentale interactive pour le CRPE : théories de l'apprentissage, didactique et pédagogies à l'école maternelle et élémentaire, organisées par questions du métier, avec des exemples en classe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Carte de la pédagogie et de la didactique, gabarit repris de la carte du développement de l'enfant. Mise en page : barre d'outils collante, carte arborescente à gauche (défilable), fiche de lecture à droite ; une colonne sur téléphone, vue « Plan » par défaut. */
+:root {
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --ink: #1b2433;
+  --muted: #5a6577;
+  --line: #d5dbe4;
+  --accent: #2b4c9b;
+  --t-off: #0f6b5f;      /* texte officiel réglementaire */
+  --t-off-bg: #e0f1ee;
+  --t-edu: #2b4c9b;      /* ressource institutionnelle Éduscol */
+  --t-edu-bg: #e3e9f8;
+  --t-form: #9a5b00;     /* formation : INSPÉ, université */
+  --t-form-bg: #f8ecd9;
+  --t-acad: #6b4a8c;     /* repère académique (manuels) */
+  --t-acad-bg: #eee6f5;
+  --t-abs: #8a3b3b;      /* non trouvé */
+  --t-abs-bg: #f6e4e4;
+  --t-piste: #9b3f73;    /* piste : exemple proposé, sans source */
+  --t-piste-bg: #f7e6ef;
+  --echo-bg: #eef2f6;
+  --f-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161e; --surface: #19202b; --ink: #e6ebf2; --muted: #9aa6b8; --line: #2c3645; --accent: #8fb0ff;
+  --t-off: #5fd0bf; --t-off-bg: #12312d; --t-edu: #8fb0ff; --t-edu-bg: #1c2a48;
+  --t-form: #f0b45a; --t-form-bg: #3a2a12; --t-acad: #c7a6ea; --t-acad-bg: #2e2340;
+  --t-abs: #f09a9a; --t-abs-bg: #3d1f22; --t-piste: #ee9cc8; --t-piste-bg: #3a1f2f; --echo-bg: #1f2733; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #11161e; --surface: #19202b; --ink: #e6ebf2; --muted: #9aa6b8; --line: #2c3645; --accent: #8fb0ff;
+  --t-off: #5fd0bf; --t-off-bg: #12312d; --t-edu: #8fb0ff; --t-edu-bg: #1c2a48;
+  --t-form: #f0b45a; --t-form-bg: #3a2a12; --t-acad: #c7a6ea; --t-acad-bg: #2e2340;
+  --t-abs: #f09a9a; --t-abs-bg: #3d1f22; --t-piste: #ee9cc8; --t-piste-bg: #3a1f2f; --echo-bg: #1f2733; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
+[hidden] { display: none !important; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+a { color: var(--accent); }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.tete { padding-block: 20px 12px; display: grid; gap: 6px; max-width: 1400px; margin: 0 auto; }
+header.tete h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.45rem, 3.2vw, 2rem); line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+header.tete p { margin: 0; color: var(--muted); max-width: 70ch; }
+
+.outils { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-block: 1px solid var(--line); }
+.outils .in { max-width: 1400px; margin: 0 auto; padding-block: 10px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: transparent; padding: 6px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+#q { flex: 1 1 200px; min-width: 0; max-width: 340px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.filtres { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 13px; }
+.chip .pt { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.chip[aria-pressed="false"] { opacity: .45; text-decoration: line-through; }
+.bt { border: 1px solid var(--line); background: transparent; border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 13px; }
+
+main.grille { max-width: 1400px; margin: 0 auto; padding-block: 16px 40px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 420px); gap: 16px; align-items: start; }
+.zone { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; min-width: 0; }
+#carte { overflow: auto; max-height: calc(100vh - 150px); }
+#carte svg { display: block; }
+#plan { padding: 8px 4px; }
+.fiche { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 72px); max-height: calc(100vh - 100px); overflow: auto; padding: 18px 18px 22px; }
+
+/* Nœuds de la carte */
+.nd { cursor: pointer; }
+.nd rect { stroke-width: 1.5; }
+.nd text { font-family: var(--f-body); font-size: 13px; fill: var(--ink); }
+.nd.d0 text { font-family: var(--f-display); font-weight: 700; font-size: 15px; }
+.nd.d1 text { font-family: var(--f-display); font-weight: 600; font-size: 14px; }
+.nd .pm { font-family: var(--f-mono); font-size: 12px; fill: var(--muted); }
+.nd.sel rect { stroke: var(--ink); stroke-width: 2.5; }
+.nd.dim { opacity: .22; }
+.nd.hit rect { stroke: var(--accent); stroke-width: 3; }
+.lien { fill: none; stroke: var(--line); stroke-width: 1.6; }
+
+/* Plan (liste) */
+.pl { list-style: none; margin: 0; padding: 0; }
+.pl .pl { padding-left: 18px; border-left: 1px solid var(--line); margin-left: 12px; }
+.pl li > .ligne { display: flex; gap: 8px; align-items: baseline; width: 100%; text-align: left; border: 0; background: transparent; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
+.pl li > .ligne:hover { background: var(--bg); }
+.pl li > .ligne.sel { background: var(--bg); outline: 1px solid var(--line); }
+.pl .tw { font-family: var(--f-mono); color: var(--muted); width: 1em; flex: none; }
+.pl .pt { width: 9px; height: 9px; border-radius: 50%; flex: none; transform: translateY(-1px); }
+.pl .lab { min-width: 0; }
+.pl .lvl0 { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; }
+.pl .lvl1 { font-family: var(--f-display); font-weight: 600; }
+.pl li.dim > .ligne { opacity: .3; }
+.pl li.hit > .ligne .lab { text-decoration: underline 2px var(--accent); text-underline-offset: 3px; }
+
+/* Fiche */
+.fiche .vide { color: var(--muted); }
+.badge { display: inline-block; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; font-weight: 500; }
+.fiche h2 { font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; line-height: 1.2; margin: 10px 0 4px; text-wrap: balance; }
+.fiche .dates { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); margin: 0 0 10px; }
+.fiche p { margin: 0 0 10px; }
+.fiche ul { margin: 0 0 10px; padding-left: 20px; }
+.fiche li { margin-bottom: 4px; }
+.fiche h3 { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 16px 0 6px; font-weight: 500; }
+blockquote { margin: 0 0 10px; padding: 10px 12px; border-left: 3px solid var(--t-edu); background: var(--bg); border-radius: 0 8px 8px 0; }
+blockquote.off { border-left-color: var(--t-off); }
+blockquote.form { border-left-color: var(--t-form); }
+blockquote p { margin: 0 0 4px; }
+blockquote cite { display: block; font-style: normal; font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.echo { background: var(--echo-bg); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; }
+.echo p { margin: 0 0 6px; }
+.echo .note { font-size: 13px; color: var(--muted); margin: 0; }
+.srcs { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.srcs li { font-size: 13.5px; padding-left: 0; margin: 0; }
+.srcs .pg { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.enfants { display: flex; flex-wrap: wrap; gap: 6px; }
+.enfants button { border: 1px solid var(--line); background: transparent; border-radius: 999px; padding: 3px 10px; font-size: 13px; cursor: pointer; }
+
+.legende { max-width: 1400px; margin: 0 auto; padding-block: 0 32px; color: var(--muted); font-size: 13.5px; }
+.legende dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 12px; margin: 8px 0 0; }
+.legende dt { font-weight: 700; color: var(--ink); display: flex; gap: 6px; align-items: center; }
+.legende dd { margin: 0; min-width: 0; }
+@media (max-width: 560px) {
+  .legende dl { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .legende dd { margin-bottom: 8px; }
+}
+
+@media (max-width: 880px) {
+  main.grille { grid-template-columns: minmax(0, 1fr); }
+  .fiche { position: static; max-height: none; }
+  #carte { max-height: 70vh; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nd rect { transition: stroke .15s; }
+}
+
+/* Encadré « En classe », pistes, étiquettes ABC */
+.classe { border: 1px solid var(--line); border-radius: 10px; padding: 4px 12px 2px; margin-bottom: 10px; }
+.classe h4 { font-family: var(--f-display); font-weight: 600; font-size: .95rem; margin: 10px 0 6px; }
+.ex { margin: 0 0 10px; padding: 8px 10px; border-left: 3px solid var(--t-edu); background: var(--bg); border-radius: 0 8px 8px 0; }
+.ex p { margin: 0 0 4px; }
+.ex cite { display: block; font-style: normal; font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.ex.piste { border-left: 3px dashed var(--t-piste); background: var(--t-piste-bg); }
+.ex .tag { display: inline-block; font-family: var(--f-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--t-piste); margin-bottom: 2px; }
+.piste-pt { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2px dashed var(--t-piste); }
+.abc { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; margin: 0 0 10px; }
+.abc span { font-size: 12.5px; border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; }
+.abc-mini { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .06em; padding: 1px 6px; border-radius: 4px; background: var(--ink); color: var(--surface); margin-right: 4px; }
+.abc .abc-mini { border: 0; padding: 1px 6px; font-size: 10.5px; border-radius: 4px; }
+</style>
+
+</head>
+<body>
+
+<header class="tete wrap">
+  <h1>Pédagogie et didactique à l'école primaire, par questions du métier</h1>
+  <p>Pour le CRPE, de la maternelle au CM2. Chaque nœud indique d'où vient l'information : texte officiel, ressource institutionnelle, formation ou repère de manuel. Les citations sont recopiées des documents, avec la page du PDF. Les exemples « En classe » sans source sont marqués « Piste ».</p>
+</header>
+
+<div class="outils">
+  <div class="in wrap">
+    <div class="seg" role="group" aria-label="Affichage">
+      <button type="button" id="v-carte" aria-pressed="true">Carte</button>
+      <button type="button" id="v-plan" aria-pressed="false">Plan</button>
+    </div>
+    <input id="q" type="search" placeholder="Chercher : erreur, Freinet, feedback…" aria-label="Chercher dans la carte">
+    <div class="filtres" id="filtres" role="group" aria-label="Niveaux de source"></div>
+    <button type="button" class="bt" id="tout">Tout déplier</button>
+    <button type="button" class="bt" id="rien">Replier</button>
+  </div>
+</div>
+
+<main class="grille wrap">
+  <section class="zone" aria-label="Carte mentale">
+    <div id="carte"></div>
+    <div id="plan" hidden></div>
+  </section>
+  <aside class="zone fiche" id="fiche" aria-live="polite"></aside>
+</main>
+
+<section class="legende wrap" aria-label="Niveaux de source">
+  <strong>Comment lire la carte</strong>
+  <dl id="leg"></dl>
+</section>
+
+<script>
+const NIVEAUX = {
+  off:  { nom: "Texte officiel", court: "Officiel", c: "--t-off", bg: "--t-off-bg", def: "Texte réglementaire : référentiel de compétences, programme. Il fixe ce qui est attendu mais ne nomme presque aucun théoricien." },
+  edu:  { nom: "Ressource institutionnelle", court: "Institution", c: "--t-edu", bg: "--t-edu-bg", def: "Ressource publiée par le ministère ou un organisme public (Éduscol, Conseil scientifique de l'éducation nationale, Cnesco). Elle n'est pas prescriptive, mais c'est là que l'institution cite la recherche et les auteurs." },
+  form: { nom: "Formation et mouvements pédagogiques", court: "Formation", c: "--t-form", bg: "--t-form-bg", def: "Maquette d'INSPÉ, support universitaire ou document d'un mouvement pédagogique (ICEM pour Freinet). Il montre ce qui est enseigné ou pratiqué, varie d'un lieu à l'autre et n'a pas de valeur nationale." },
+  acad: { nom: "Repère académique", court: "Repère", c: "--t-acad", bg: "--t-acad-bg", def: "Contenu classique des manuels de sciences de l'éducation, absent des documents consultés. À vérifier dans un manuel avant de le citer au jury." },
+  abs:  { nom: "Non trouvé", court: "Absent", c: "--t-abs", bg: "--t-abs-bg", def: "Cherché sans succès dans les documents consultés. À ne pas présenter au jury comme une référence institutionnelle." },
+  piste: { nom: "Piste (exemple proposé)", court: "Piste", c: "--t-piste", bg: "--t-piste-bg", def: "Exemple de mise en œuvre rédigé pour cette carte, sans source. Il sert à imaginer la classe ; ce n'est pas une référence." },
+  nav:  { nom: "Regroupement", court: "", c: "--muted", bg: "--bg", def: "" }
+};
+
+const ABC = {
+  acq: "Acquisition", enq: "Enquête", dis: "Discussion", col: "Collaboration", pra: "Pratique", pro: "Production"
+};
+
+const DEV = "https://laetitiaperez.github.io/developpement-enfant/";
+
+const S = {
+  ref2013: { l: "Référentiel des compétences professionnelles des métiers du professorat et de l'éducation, arrêté du 1er juillet 2013, BO n° 30 du 25 juillet 2013", u: "https://www.education.gouv.fr/bo/13/Hebdo30/MENE1315928A.htm" },
+  c1: { l: "Programme du cycle 1, version consolidée (BO n° 41 du 31 octobre 2024 et BO n° 19 du 7 mai 2026)", u: "https://eduscol.education.gouv.fr/sites/default/files/document/programme-cycle-1-consolide-127565.pdf" },
+  c3: { l: "Programme du cycle 3, version consolidée (BO n° 31/2020 et n° 25/2023)", u: "https://eduscol.education.gouv.fr/media/100806/download?attachment" },
+  frC2: { l: "Programme de français du cycle 2 (BO n° 41 du 31 octobre 2024)", u: "https://www.education.gouv.fr/sites/default/files/document/Annexe%203%20%E2%80%93%20Programme%20de%20fran%C3%A7ais%20du%20cycle%202-403818.pdf" },
+  mathsC2: { l: "Programme de mathématiques du cycle 2 (BO n° 41 du 31 octobre 2024)", u: "https://www.education.gouv.fr/sites/default/files/document/Annexe%204%20%E2%80%93%20Programme%20de%20math%C3%A9matiques%20du%20cycle%202-403821.pdf" },
+  frC3: { l: "Programme de français du cycle 3 (2025)", u: "https://www.education.gouv.fr/sites/default/files/programme-de-fran-ais-pour-le-cycle-3-439824.pdf" },
+  mathsC3: { l: "Programme de mathématiques du cycle 3 (2025)", u: "https://www.education.gouv.fr/sites/default/files/programme-de-math-matiques-pour-le-cycle-3-439827.pdf" },
+  guideCP: { l: "Éduscol, Pour enseigner la lecture et l'écriture au CP, un guide fondé sur l'état de la recherche (2019)", u: "https://eduscol.education.gouv.fr/sites/default/files/document/guide-pour-enseigner-la-lecture-et-l-ecriture-au-cp-67854.pdf" },
+  guideCM: { l: "Éduscol, La résolution de problèmes mathématiques au cours moyen (guide, 2021)", u: "https://eduscol.education.fr/document/32206/download" },
+  vadeGS: { l: "Éduscol, Vademecum Enseigner en grande section dédoublée (août 2023)", u: "https://eduscol.education.gouv.fr/sites/default/files/document/vademecum-enseigner-en-grande-section-dedoublee-101601.pdf" },
+  jeu: { l: "Éduscol, Ressources maternelle, Jouer et apprendre : cadrage général (2015)", u: "https://eduscol.education.fr/document/13528/download" },
+  evalMat: { l: "Éduscol, Évaluer à l'école maternelle : de l'observation au carnet de suivi (2015)", u: "https://eduscol.education.fr/document/5640/download" },
+  csen: { l: "Conseil scientifique de l'éducation nationale, L'enseignement explicite : de quoi s'agit-il, pourquoi ça marche et dans quelles conditions ? (P. Bressoux, juin 2022)", u: "https://www.csen.education.gouv.fr/wp-content/uploads/2025/11/20f2cf04-ac73-4d53-8850-a30e3018301c-CSENSyntheseenseignement-expliciteweb.pdf" },
+  cnescoDiff: { l: "Cnesco et Ifé/ENS de Lyon, Différenciation pédagogique : dossier de synthèse et recommandations du jury (mars 2017)", u: "https://www.cnesco.fr/wp-content/uploads/2017/03/CCDifferenciation_DP_reco.pdf" },
+  cnescoEval: { l: "Cnesco, L'évaluation en classe, au service de l'apprentissage des élèves : recommandations du jury (mars 2023)", u: "https://www.cnesco.fr/wp-content/uploads/2023/03/Cnesco-CC-Eval_RECOMMANDATIONS-DU-JURY.pdf" },
+  lille: { l: "INSPÉ Lille Hauts-de-France, guide des enseignements, master MEEF 1er degré, M1 2024-2025", u: "https://www.inspe-lille-hdf.fr/fileinspe/user_upload/Documents/Ressources_formateurs_etudiants/M1_MEEF_1er_degre/GE_1D_M1_24-25.pdf" },
+  icem: { l: "ICEM, groupe départemental de l'Isère (pédagogie Freinet), Le Bulletin de l'IDEM38, n° 20 (juin 2016)", u: "https://www.icem-pedagogie-freinet.org/sites/default/files/idem-bulletin_20.pdf" },
+  abcCond: { l: "Haute École Condorcet, cartes ABC Learning Design adaptées (2025), d'après Young et Perović, UCL (2015)", u: "https://sap.condorcet.be/wp-content/uploads/2025/01/Cartes_Moodle_v4_adapte-Condorcet.pdf" },
+  abcRPF: { l: "Raspberry Pi Foundation, Pedagogy Quick Read : Supporting rapid learning design using ABC learning design (2025), en anglais", u: "https://static.raspberrypi.org/files/curriculum/quickreads/25-Pedagogy_Summary_ABC_Learning_Design_2025_en-gb.pdf" }
+};
+
+// q : citations [texte, clé source, page, niveau de la bordure]
+// echos : [[citation, étiquette, clé source, page]] : rapprochements avec les programmes
+// classe : { mat: [...], elem: [...] } ; chaque exemple = [texte, clé source ou null, page] ; sans clé, c'est une piste
+// abc : types d'apprentissage dominants (grille ABC) ; dev : [[id, titre]] dans la carte du développement
+const ARBRE = {
+  id: "racine", t: "Pédagogie et didactique à l'école primaire", n: "nav",
+  corps: "<p>La carte est organisée par les questions que se pose l'enseignant : comment les élèves apprennent, comment concevoir une séance, que faire de l'erreur, comment différencier, évaluer, rendre les élèves actifs, et ce que la maternelle a de particulier. Une dernière branche rassemble les débats.</p><p>Chaque méthode a un encadré <strong>En classe</strong>, avec un volet maternelle et un volet élémentaire. Les exemples tirés d'un document sont cités ; les autres sont marqués <strong>Piste</strong>.</p><p>Les étiquettes <strong>ABC</strong> indiquent les types d'apprentissage dominants de chaque méthode, selon la grille ABC Learning Design (branche « Concevoir »).</p>",
+  e: [
+
+  /* ---------------- 1. Le cadre ---------------- */
+  { id: "cadre", t: "Le cadre : ce que demandent les textes", n: "nav",
+    corps: "<p>Le référentiel de 2013 décrit ce qu'un professeur doit savoir faire. Il emploie le vocabulaire de la didactique (obstacles, étayage, approches didactiques) mais ne prescrit aucune méthode et ne cite aucun auteur.</p>",
+    e: [
+    { id: "ref-p3", t: "P3 : concevoir et animer", n: "off", d: "Référentiel 2013, compétence P3",
+      corps: "<p>« Construire, mettre en œuvre et animer des situations d'enseignement et d'apprentissage prenant en compte la diversité des élèves ». C'est la compétence la plus directement liée à la didactique : chaque mot du premier item renvoie à une branche de cette carte.</p>",
+      q: [["Savoir préparer les séquences de classe et, pour cela, définir des programmations et des progressions ; identifier les objectifs, contenus, dispositifs, obstacles didactiques, stratégies d'étayage, modalités d'entraînement et d'évaluation.", "ref2013", null],
+          ["Sélectionner des approches didactiques appropriées au développement des compétences visées.", "ref2013", null],
+          ["Tirer parti de l'importance du jeu dans le processus d'apprentissage.", "ref2013", null]],
+      s: ["ref2013"] },
+    { id: "ref-p4", t: "P4 : faire fonctionner le groupe", n: "off", d: "Référentiel 2013, compétence P4",
+      corps: "<p>« Organiser et assurer un mode de fonctionnement du groupe favorisant l'apprentissage et la socialisation des élèves ». On y trouve à la fois l'explicitation des objectifs et le tâtonnement : le texte tient les deux ensemble.</p>",
+      q: [["Rendre explicites pour les élèves les objectifs visés et construire avec eux le sens des apprentissages.", "ref2013", null],
+          ["Favoriser la participation et l'implication de tous les élèves et créer une dynamique d'échanges et de collaboration entre pairs.", "ref2013", null],
+          ["Apporter les aides nécessaires à l'accomplissement des tâches proposées, tout en laissant aux enfants la part d'initiative et de tâtonnement propice aux apprentissages.", "ref2013", null]],
+      s: ["ref2013"] },
+    { id: "ref-p5", t: "P5 : évaluer", n: "off", d: "Référentiel 2013, compétence P5",
+      q: [["Analyser les réussites et les erreurs, concevoir et mettre en œuvre des activités de remédiation et de consolidation des acquis.", "ref2013", null],
+          ["Faire comprendre aux élèves les principes de l'évaluation afin de développer leurs capacités d'auto-évaluation.", "ref2013", null]],
+      s: ["ref2013"] },
+    { id: "ref-recherche", t: "Liberté pédagogique et recherche", n: "off", d: "Référentiel 2013",
+      corps: "<p>Deux phrases à connaître pour l'oral : le professeur choisit ses méthodes, dans le cadre des programmes, et il se tient informé de la recherche.</p>",
+      q: [["Disposant d'une liberté pédagogique reconnue par la loi, ils exercent leur responsabilité dans le respect des programmes et des instructions du ministre de l'éducation nationale ainsi que dans le cadre du projet d'école ou d'établissement, avec le conseil et sous le contrôle des corps d'inspection et de direction.", "ref2013", null],
+          ["Compléter et actualiser ses connaissances scientifiques, didactiques et pédagogiques.", "ref2013", null]],
+      s: ["ref2013"] },
+    { id: "attendus", t: "Les attendus de fin de formation", n: "form", d: "Repris par l'INSPÉ de Lille",
+      corps: "<p>Le guide de l'INSPÉ de Lille reproduit en annexe les attendus de fin de formation du référentiel « Former aux métiers du professorat et de l'éducation au 21e siècle ». L'attendu A15 réunit en une phrase trois notions souvent opposées.</p>",
+      q: [["A14 Planifie des séquences d’enseignement-apprentissage structurées, mobilisant un cadre didactique et pédagogique répondant aux objectifs fixés", "lille", 84, "form"],
+          ["A15 Conduit un enseignement explicite, attentif aux besoins de chaque élève, en recourant à la coopération et à la différenciation", "lille", 84, "form"]],
+      s: ["lille"] },
+    { id: "constat", t: "Ce que les programmes disent, et ne disent pas", n: "nav",
+      corps: "<p>Les programmes ne citent aucun pédagogue ni didacticien. Ils en emploient pourtant le vocabulaire : <em>institutionnaliser</em> (Brousseau), <em>obstacle</em> (Bachelard), <em>étayage</em> (Bruner). Depuis 2024, les programmes du cycle 2 placent tout l'enseignement « dans le cadre d'un enseignement explicite, structuré et progressif ».</p><p>À l'oral, on peut donc dire : « le programme emploie ce terme ; il vient de tel auteur ». C'est un rapprochement, pas une citation.</p>",
+      echos: [["Tout comme l’ensemble des domaines du cycle 2, l’enseignement des mathématiques participe à établir les savoirs fondamentaux des élèves dans le cadre d’un enseignement explicite, structuré et progressif.", "Cycle 2", "mathsC2", 2]] }
+  ]},
+
+  /* ---------------- 2. Comment les élèves apprennent ---------------- */
+  { id: "apprendre", t: "Comment les élèves apprennent-ils ?", n: "nav",
+    corps: "<p>Quatre grandes familles de théories de l'apprentissage. Elles ne se succèdent pas comme des modes : chacune éclaire un aspect, et les programmes actuels en combinent plusieurs.</p>",
+    e: [
+    { id: "behav", t: "Behaviorisme : renforcer les réponses", n: "acad", d: "Watson, Skinner (années 1910-1950)",
+      corps: "<p>Pour le behaviorisme, apprendre, c'est modifier un comportement observable. Skinner décrit le <strong>conditionnement opérant</strong> : une réponse suivie d'un renforcement a plus de chances de se reproduire. Il en tire l'<strong>enseignement programmé</strong> : découper le contenu en petites étapes, faire répondre l'élève à chacune et lui donner aussitôt le résultat.</p><p>Ce qui en reste à l'école : l'entraînement fréquent, le découpage en étapes et le retour immédiat. La limite : le modèle ne dit rien de ce qui se passe dans la tête de l'élève.</p>",
+      abc: ["pra"],
+      echos: [["Afin de s’assurer de l’acquisition des automatismes attendus par tous les élèves, des séances quotidiennes de calcul mental sont proposées tout au long du cycle 2.", "Cycle 2", "mathsC2", 2]],
+      classe: {
+        mat: [["Jeu de loto des nombres en petit groupe : l'enfant annonce la quantité, retourne la carte et vérifie aussitôt s'il a juste. L'entraînement est court, répété et la validation immédiate.", null]],
+        elem: [["Calcul mental flash en début de journée : dix calculs sur l'ardoise, correction tout de suite, et chaque élève note son score pour voir ses progrès d'une semaine à l'autre.", null]]
+      } },
+    { id: "constr", t: "Constructivisme : agir pour comprendre", n: "acad", d: "Piaget",
+      corps: "<p>L'élève construit ses connaissances en agissant sur le réel. Quand ce qu'il pense ne marche plus, il doit réorganiser ses idées (accommodation). L'enseignant ne transmet pas le savoir tout fait : il conçoit des situations où les idées des élèves sont mises à l'épreuve.</p>",
+      dev: [["piaget", "Piaget : le constructivisme"], ["pia-meca", "Assimilation, accommodation, équilibration"]],
+      abc: ["enq", "pra"],
+      echos: [["Pour susciter la réflexion des élèves, les professeurs proposent des problèmes à leur portée. Ils guident les élèves afin que ceux-ci mettent en lien des situations vécues, fassent appel à leurs connaissances et élaborent des propositions de résolution. Les élèves sont accompagnés dans leurs tâtonnements et leurs essais de réponse.", "Cycle 1", "c1", 4]],
+      classe: {
+        mat: [["Coin eau en MS : avant de lâcher les objets dans la bassine, chacun dit s'il pense qu'ils vont flotter ou couler. On essaie, on trie, et on revient sur les prévisions qui n'ont pas marché.", null]],
+        elem: [["Au CE1, avant de parler de masse, les élèves rangent des objets du plus lourd au plus léger « à la main », puis vérifient avec une balance Roberval. L'écart entre la sensation et la mesure fait évoluer leurs idées.", null]]
+      } },
+    { id: "socio", t: "Socioconstructivisme : apprendre avec les autres", n: "acad", d: "Vygotski, Bruner ; Doise et Mugny",
+      corps: "<p>On apprend d'abord avec les autres, puis seul. Vygotski décrit la <strong>zone proximale de développement</strong> : ce que l'enfant réussit avec une aide, mais pas encore seul. Bruner décrit l'<strong>étayage</strong> de l'adulte. Doise et Mugny (années 1970-1980) montrent que la confrontation de points de vue entre pairs, le <strong>conflit sociocognitif</strong>, peut faire progresser chacun.</p>",
+      dev: [["vygotski", "Vygotski : le socioconstructivisme"], ["bruner", "Bruner : l'étayage"]],
+      abc: ["dis", "col"],
+      echos: [["Une place importante est donnée à l’observation et à l’imitation des autres élèves et des adultes. Les professeurs favorisent les interactions et créent les conditions d’une attention partagée et d’une prise en compte du point de vue de l’autre.", "Cycle 1", "c1", 4]],
+      classe: {
+        mat: [["En atelier de quatre en GS, deux enfants doivent se mettre d'accord pour trier des photos (vivant ou non vivant) avant de coller. L'enseignant écoute les arguments plutôt que de trancher.", null]],
+        elem: [["Des modalités diverses (recherche en binômes ou en groupes plus larges, entraide entre élèves, exposé d’une réponse ou d’une solution, débat autour de celle-ci, etc.) favorisent et renforcent l’engagement de chaque élève", "mathsC3", 4]]
+      } },
+    { id: "cogn", t: "Sciences cognitives : attention, mémoire, engagement", n: "edu", d: "Dehaene ; Sweller",
+      corps: "<p>Les guides Éduscol publiés depuis 2018 citent beaucoup Stanislas Dehaene. On résume souvent ses travaux par <strong>quatre piliers de l'apprentissage</strong> : l'attention, l'engagement actif, le retour d'information et la consolidation (<em>Apprendre !</em>, 2018 ; repère de manuel). La <strong>théorie de la charge cognitive</strong> (Sweller) ajoute que la mémoire de travail est limitée : d'où l'intérêt des automatismes et des documents épurés.</p>",
+      dev: [["cogn", "Éduscol : la psychologie cognitive prend le relais"], ["fe", "Les fonctions exécutives"]],
+      abc: ["pra", "acq"],
+      q: [["Un organisme passif n’apprend pas. Pour maximiser sa curiosité, il faut veiller à présenter à l’enfant des situations d’apprentissage qui ne soient ni trop faciles, ni trop difficiles : c’est le principe d’adaptation de l’enseignement au niveau de l’enfant.", "guideCP", 56],
+          ["les travaux de Stanislas Dehaene mettent en évidence les trois facteurs qui maximisent la mémoire : — la profondeur de l’encodage (faire travailler activement les élèves sur le sens de ce qu’ils apprennent) ; — l’alternance de périodes d’apprentissage et de test (mettre très souvent les élèves en situation d’épreuve) ; — la répétition à des intervalles espacés", "guideCP", 96],
+          ["Une tâche qui véhicule trop d’informations, dont certaines inutiles, peut entraîner des difficultés chez certains élèves.", "cnescoDiff", 9]],
+      echos: [["La maîtrise de ces automatismes allège la mémoire de travail de l’élève lors de la résolution de problèmes, lui permettant de se consacrer pleinement à des tâches cognitives de niveau supérieur comme la prise d’initiatives, la créativité ou le raisonnement.", "Cycle 3", "mathsC3", 3]],
+      classe: {
+        mat: [["Ils organisent des temps d’évocation des activités et des expériences collectives et individuelles afin de les aider à prendre conscience qu’apprendre à l’école, c’est remobiliser régulièrement les acquis antérieurs pour aller plus loin.", "c1", 5]],
+        elem: [["Au CM1, un « quiz du lundi » de cinq questions reprend des notions vues une semaine, un mois et un trimestre plus tôt : c'est la répétition espacée et le test fréquent, sans note.", null]]
+      } }
+  ]},
+
+  /* ---------------- 3. Concevoir ---------------- */
+  { id: "concevoir", t: "Comment concevoir une séance ou une séquence ?", n: "nav",
+    corps: "<p>La didactique étudie ce qui se passe entre un savoir, un élève et un enseignant, discipline par discipline. Cette branche réunit les outils de conception : d'où vient le savoir enseigné, comment construire une situation, comment structurer une séance, et une méthode de planification venue du supérieur, ABC Learning Design.</p>",
+    e: [
+    { id: "transpo", t: "Transposition didactique", n: "acad", d: "Verret (1975), Chevallard (1985)",
+      corps: "<p>Le savoir enseigné n'est pas le savoir des chercheurs. Chevallard décrit une chaîne : <strong>savoir savant</strong>, puis <strong>savoir à enseigner</strong> (celui des programmes), puis <strong>savoir enseigné</strong> (celui de la classe). À chaque étape, le savoir est découpé, simplifié et mis en ordre.</p><p>Exemple : la « règle » de l'accord du participe passé ou le schéma du cycle de l'eau sont des savoirs transposés. Savoir le dire permet d'en expliquer les limites aux élèves plus tard.</p>",
+      echos: [["Connaître de manière approfondie sa discipline ou ses domaines d'enseignement. En situer les repères fondamentaux, les enjeux épistémologiques et les problèmes didactiques.", "Référentiel 2013, P1", "ref2013", null]],
+      classe: {
+        mat: [["En GS, « les graines » : on ne garde de la botanique que ce que les enfants peuvent observer (une graine germe s'il y a de l'eau), et on laisse de côté la photosynthèse.", null]],
+        elem: [["Au CM2, le schéma du cycle de l'eau du manuel est comparé à une photo de nuages et de pluie : les élèves cherchent ce que le schéma simplifie.", null]]
+      } },
+    { id: "tsd", t: "Théorie des situations didactiques", n: "acad", d: "Guy Brousseau (1970-1998)",
+      corps: "<p>Brousseau conçoit des situations où l'élève apprend en s'adaptant à un <strong>milieu</strong> qui lui résiste. Quelques mots-clés :</p><ul><li><strong>Dévolution</strong> : l'enseignant fait accepter le problème à l'élève comme le sien.</li><li><strong>Situation adidactique</strong> : l'élève agit sans que l'enseignant donne la réponse ; c'est le milieu qui lui dit s'il a réussi.</li><li>Phases d'<strong>action</strong>, de <strong>formulation</strong> et de <strong>validation</strong>.</li><li><strong>Institutionnalisation</strong> : l'enseignant dit ce qu'il fallait retenir et lui donne le statut de savoir de la classe.</li></ul><p>Le mot « institutionnaliser » est passé dans les programmes, sans le nom de Brousseau.</p>",
+      abc: ["enq", "dis"],
+      echos: [["l’institutionnalisation des savoirs dans un cahier de leçon est essentielle.", "Cycle 3", "c3", 99]],
+      classe: {
+        mat: [["Le professeur, quant à lui, explicite oralement tout ce qu’il montre aux élèves pour les guider dans l’avancement de la tâche à réaliser et pour institutionnaliser les apprentissages effectués.", "c1", 36],
+              ["Les « boîtes » en MS : l'enfant doit aller chercher en une seule fois autant de voitures que de garages. Le milieu valide seul : s'il reste un garage vide, il le voit.", null]],
+        elem: [["une restitution collective pour aboutir à une institutionnalisation qui donne lieu à une trace écrite.", "frC3", 16]]
+      } },
+    { id: "sitpb", t: "La situation-problème", n: "off", d: "Programme du cycle 1 ; Meirieu",
+      corps: "<p>Une situation-problème place l'élève devant un obstacle qu'il ne peut franchir qu'en apprenant quelque chose. Philippe Meirieu en a fait un outil de conception (repère de manuel). Le programme de maternelle donne une définition du problème très proche.</p>",
+      abc: ["enq"],
+      q: [["La notion de problème suppose également la présence d’un obstacle : la réponse à un problème n’est pas immédiate. Elle nécessite la mise en place d’une stratégie. Il en résulte qu’un problème à un niveau scolaire n’en est plus un à un niveau scolaire plus élevé.", "c1", 44, "off"]],
+      classe: {
+        mat: [["En MS, pour la collation, un enfant doit dire à la cantine combien de gobelets apporter, sans les compter devant les autres. Il doit trouver une façon de garder la quantité en mémoire (doigts, dessin, nombre).", null]],
+        elem: [["Au CE2, « Combien de tables faut-il pour la fête de l'école ? », avec le nombre d'invités et de places par table. Les élèves cherchent avant toute leçon sur la division.", null]]
+      } },
+    { id: "explicite", t: "L'enseignement explicite", n: "edu", d: "Rosenshine ; Gauthier, Bissonnette ; CSEN (2022)",
+      corps: "<p>Né de la recherche sur l'efficacité de l'enseignement, l'enseignement explicite structure la séance du simple au complexe. La synthèse du CSEN distingue plusieurs phases : une <strong>ouverture</strong> (objectif, rappel des acquis), le <strong>modelage</strong> (« Je fais » : l'enseignant montre en pensant à voix haute), la <strong>pratique guidée</strong> (« Nous faisons ensemble »), puis la pratique autonome et la consolidation.</p><p>Le CSEN insiste : ce n'est ni un cours magistral ni un enseignement frontal, et l'élève y est actif.</p>",
+      abc: ["acq", "pra"],
+      q: [["Il s’agit d’un enseignement structuré, où l’activité de l’enseignant – essentielle – a pour but de favoriser, par des explications claires, des démonstrations et une pratique guidée, un engagement actif des élèves et une meilleure compréhension de l’objet d’apprentissage.", "csen", 3],
+          ["Il n’est pas « traditionnel » ou magistral dans le sens où il n’est pas axé sur la transmission sous la forme d’un monologue de l’enseignant", "csen", 6],
+          ["La deuxième phase, dite de « modelage » (« Je fais ») est celle au cours de laquelle l’enseignant fait une démonstration de l’objet d’apprentissage, expose les notions essentielles à apprendre.", "csen", 8]],
+      echos: [["L’enseignement explicite des attendus, notamment en calcul et en résolution de problèmes, doit leur permettre de réaliser les tâches proposées, d’abord en étant guidés par l’enseignant, puis en devenant progressivement autonomes", "Cycle 2", "mathsC2", 3]],
+      classe: {
+        mat: [["Les professeurs veillent alors à leur expliquer l’objectif de ce qu’ils sont en train d’apprendre, à leur faire comprendre le sens des efforts demandés et à leur faire percevoir les progrès réalisés.", "c1", 4],
+              ["Geste d'écriture en GS : l'enseignant trace la lettre en disant tout haut « je pars d'en haut, je descends, je remonte » ; puis tous la tracent ensemble dans l'air ; puis chacun sur son ardoise.", null]],
+        elem: [["Accord sujet-verbe au CE2. Je fais : l'enseignant analyse deux phrases à voix haute. Nous faisons : trois phrases sur l'ardoise, corrigées aussitôt. Tu fais : cinq phrases seul, puis réemploi dans un court texte.", null]]
+      } },
+    { id: "manip", t: "Manipuler, verbaliser, abstraire", n: "off", d: "Programme de mathématiques du cycle 2",
+      corps: "<p>Le programme décrit un passage « du concret à l'abstrait, en passant par la représentation imagée ». On reconnaît la démarche concret, imagé, abstrait de Bruner, souvent associée à la « méthode de Singapour » (repère). Le programme ajoute un point de vigilance important.</p>",
+      abc: ["pra", "pro"],
+      q: [["si la manipulation est un passage essentiel, la réussite d’une activité manipulatoire ne suffit cependant pas pour attester de la compréhension de la notion mathématique qui la sous-tend.", "mathsC2", 2, "off"],
+          ["il importe notamment que les procédures et les raisonnements engagés soient verbalisés, à la fois par les élèves eux-mêmes, avec leurs propres mots, et par l’enseignant, avec le vocabulaire adapté.", "mathsC2", 2, "off"]],
+      classe: {
+        mat: [["Le matériel servant aux manipulations a vocation à évoluer d’objets figuratifs en lien avec la situation étudiée à des objets symboliques à caractère générique (jetons, cubes, etc.), puis à disparaitre au profit de manipulations purement mentales", "c1", 36]],
+        elem: [["Au CP, pour 7 + 5 : on manipule des cubes (concret), on dessine deux barres de dix (imagé), on écrit 7 + 3 + 2 (abstrait), et chaque étape est dite à voix haute.", null]]
+      } },
+    { id: "abc", t: "ABC Learning Design", n: "form", d: "Clive Young et Nataša Perović, UCL (2015)",
+      corps: "<p>ABC est une méthode de <strong>planification rapide</strong> créée à l'University College London pour l'enseignement supérieur. En atelier, une équipe dessine le « storyboard » d'un cours avec six cartes, une par type d'apprentissage. Ces types viennent du cadre conversationnel de Diana Laurillard (2012).</p><p>Aucun texte officiel du primaire n'y fait référence. Son intérêt pour le CRPE : vérifier qu'une séquence ne repose pas sur un seul type d'activité.</p>",
+      q: [["ABC is a rapid approach to designing learning experiences, centred around six learning types and a design process.", "abcRPF", 1, "form"]],
+      s: ["abcRPF", "abcCond"],
+      e: [
+      { id: "abc-six", t: "Les six types d'apprentissage", n: "form",
+        corps: "<ul><li><strong>Acquisition</strong> : écouter, lire, regarder.</li><li><strong>Enquête</strong> : explorer, comparer, critiquer des ressources.</li><li><strong>Discussion</strong> : formuler ses idées, écouter, répondre.</li><li><strong>Collaboration</strong> : produire ensemble.</li><li><strong>Pratique</strong> : s'entraîner et utiliser le retour obtenu.</li><li><strong>Production</strong> : montrer ce qu'on a compris en fabriquant quelque chose.</li></ul>",
+        q: [["Apprendre par la discussion exige de l'apprenant qu'il formule ses idées et questions, qu'il écoute, remette en cause, réponde aux arguments et questions de l'enseignant et/ou de ses pairs.", "abcCond", 1, "form"],
+            ["Apprendre par enquête aide l’apprenant à explorer, comparer et critiquer les textes, documents et autres ressources qui renvoient aux concepts et idées enseignées.", "abcCond", 3, "form"],
+            ["L’apprentissage par la pratique permet à l’apprenant de s'entraîner et d'utiliser la rétroaction pour améliorer ses connaissances ou les actions suivantes.", "abcCond", 3, "form"]],
+        s: ["abcCond"] },
+      { id: "abc-styles", t: "Types d'apprentissage, pas styles d'apprentissage", n: "form",
+        corps: "<p>Les six types décrivent des <strong>activités</strong>, pas des profils d'élèves. Le document de la Raspberry Pi Foundation le précise : il ne faut pas les confondre avec les « styles d'apprentissage » (visuel, auditif, kinesthésique), une idée qu'il dit largement discréditée.</p>",
+        q: [["It is important to distinguish these six learning types from the widely discredited […] concept of ‘learning styles’.", "abcRPF", 1, "form"]],
+        s: ["abcRPF"] },
+      { id: "abc-ecole", t: "Transposer ABC à l'école", n: "form",
+        corps: "<p>Des enseignants du secondaire anglais l'ont déjà adapté à leurs classes. À l'école primaire, il sert surtout de <strong>grille de relecture</strong> : on note pour chaque séance le type d'activité dominant, puis on regarde l'équilibre de la séquence.</p><p>Les étiquettes ABC de cette carte appliquent cette grille aux méthodes, à titre de proposition.</p>",
+        q: [["In 2020 (during the COVID-19 pandemic), the Computing at School (CAS) Research Working Group worked with classroom teachers to apply ABC learning design in their own school-based contexts.", "abcRPF", 2, "form"]],
+        classe: {
+          mat: [["Séquence « Les graines » en MS. Acquisition : album documentaire lu par l'enseignant. Enquête : ouvrir des fruits et chercher les graines. Pratique : semer en suivant une fiche-recette en images. Discussion : « pourquoi la mienne ne pousse pas ? ». Production : le cahier de culture photographié. Collaboration : la jardinière de la classe.", null]],
+          elem: [["Séquence « Le cycle de l'eau » en CM1. Acquisition : courte vidéo et explication. Enquête : relevés de la flaque de la cour sur une semaine. Discussion : débat « où va l'eau ? ». Collaboration : maquette en groupe. Pratique : schéma à compléter. Production : exposé enregistré pour la classe de CE2.", null]]
+        },
+        s: ["abcRPF"] }
+      ]}
+  ]},
+
+  /* ---------------- 4. L'erreur ---------------- */
+  { id: "erreur", t: "Que faire de l'erreur ?", n: "nav",
+    corps: "<p>Pour la didactique, l'erreur n'est pas une faute à sanctionner : elle renseigne sur la façon dont l'élève pense. Les programmes reprennent cette idée sans nommer ses auteurs.</p>",
+    e: [
+    { id: "err-statut", t: "Le statut de l'erreur dans les textes", n: "off",
+      q: [["L’erreur est accueillie par le professeur comme une occasion d’apprendre.", "frC2", 20, "off"],
+          ["Ils s’appuient sur les essais et les erreurs pour initier les échanges entre élèves pour les amener à réfléchir aux différentes solutions possibles.", "c1", 4, "off"],
+          ["il importe de lui donner l’occasion de s’exprimer, à l’écrit comme à l’oral, sans crainte de l’erreur ou du jugement porté par autrui", "mathsC3", 4, "off"],
+          ["il est nécessaire de faire diminuer la pression autour des erreurs, pour que les élèves s’autorisent à en faire et puissent s’orienter vers des buts de maîtrise.", "cnescoEval", 15, "edu"]],
+      corps: "<p>Le Cnesco relie le statut de l'erreur aux <strong>buts de maîtrise</strong> (progresser) par opposition aux <strong>buts de performance</strong> (se comparer aux autres).</p>" },
+    { id: "obstacle", t: "L'obstacle et l'objectif-obstacle", n: "acad", d: "Bachelard (1938), Martinand (1986)",
+      corps: "<p>Bachelard parle d'<strong>obstacle épistémologique</strong> : une connaissance ancienne, qui a marché jusque-là, empêche d'en construire une nouvelle. Exemple classique : « plus un nombre a de chiffres, plus il est grand » est vrai pour les entiers et faux pour les décimaux (2,15 n'est pas plus grand que 2,5).</p><p>Martinand propose l'<strong>objectif-obstacle</strong> : choisir comme objectif d'une séquence le franchissement d'un obstacle repéré. Les guides Éduscol récents parlent d'obstacles sans citer ces auteurs.</p>",
+      q: [["Ces dernières décennies, de nombreux travaux de recherche ont porté sur ce qui fait obstacle à la réussite des élèves lors de la résolution de problèmes.", "guideCM", 67, "edu"],
+          ["Les enseignants doivent être formés, dès la formation initiale et tout au long de la vie, au repérage des obstacles potentiels de situations d’enseignement/apprentissage.", "cnescoDiff", 15, "edu"]],
+      classe: {
+        mat: [["En GS, beaucoup d'enfants pensent qu'une rangée de jetons plus longue en contient davantage. On écarte les jetons devant eux, on recompte ensemble, puis on fait le même jeu avec les rangées serrées.", null]],
+        elem: [["Au CM1, « Range 2,5 ; 2,15 ; 2,105 » : on part des erreurs attendues pour construire la comparaison des décimaux avec le tableau de numération.", null]]
+      } },
+    { id: "astolfi", t: "Astolfi : l'erreur, un outil pour enseigner", n: "acad", d: "Jean-Pierre Astolfi (1997)",
+      corps: "<p>Dans <em>L'erreur, un outil pour enseigner</em> (ESF, 1997), Astolfi propose une typologie des erreurs pour choisir la bonne remédiation : erreurs dues à la compréhension des consignes, aux habitudes scolaires, aux conceptions des élèves, aux opérations intellectuelles en jeu, aux démarches adoptées, à la surcharge cognitive, au transfert d'une discipline à l'autre, ou à la complexité du contenu.</p><p>Le guide de l'INSPÉ de Lille cite Astolfi dans ses bibliographies de didactique des sciences.</p>",
+      s: ["lille"],
+      classe: {
+        mat: [["Quand un enfant de PS colle ses gommettes en dehors du cadre, on se demande d'abord s'il a compris le mot « dedans » avant de parler de soin.", null]],
+        elem: [["Au CE2, un élève écrit 300 + 4 = 3004. Ce n'est pas de l'étourderie : c'est une conception (« on écrit les nombres à la suite »). La remédiation passe par le tableau de numération, pas par la répétition de l'exercice.", null]]
+      } },
+    { id: "contrat", t: "Le contrat didactique", n: "acad", d: "Brousseau ; « l'âge du capitaine », IREM de Grenoble (1980)",
+      corps: "<p>Le <strong>contrat didactique</strong> désigne les attentes implicites entre l'enseignant et les élèves. L'exemple célèbre : « Sur un bateau, il y a 26 moutons et 10 chèvres. Quel est l'âge du capitaine ? ». Beaucoup d'élèves répondent 36. Ils ne sont pas absurdes : ils suivent la règle implicite « un problème de maths a une réponse, et il faut utiliser les nombres de l'énoncé ».</p><p>Les problèmes « atypiques » du guide Éduscol du cours moyen servent justement à casser ce réflexe.</p>",
+      s: ["guideCM"],
+      classe: {
+        mat: [["En GS, proposer de temps en temps une question impossible (« Combien de dents a le loup de l'album ? ») et féliciter l'enfant qui répond « on ne peut pas savoir ».", null]],
+        elem: [["Au CM, glisser chaque semaine un problème sans solution ou avec une donnée inutile, et demander aux élèves de justifier pourquoi on ne peut pas répondre.", null]]
+      } },
+    { id: "conceptions", t: "Partir des représentations initiales", n: "edu",
+      corps: "<p>Les élèves arrivent avec des idées sur le monde. La didactique des sciences parle de <strong>conceptions</strong> ou de <strong>représentations initiales</strong> : il faut les faire apparaître pour pouvoir les faire évoluer.</p>",
+      abc: ["dis", "enq"],
+      q: [["Il faut partir de ce que les élèves savent et de la façon dont ils pensent le monde pour les amener vers de nouveaux savoirs et compétences.", "cnescoDiff", 9],
+          ["La pédagogie s’appuie sur les représentations initiales des enfants. Elle peut aussi faire le choix d’agir sur leur « genèse » avant d’en envisager l’exploitation pédagogique.", "jeu", 14]],
+      classe: {
+        mat: [["recueil des représentations initiales des élèves, mise en réussite (exemples donnés à l’oral, explicitation des procédures à mobiliser, étayage matériel…).", "vadeGS", 22]],
+        elem: [["Au CM1, avant d'étudier la digestion, chaque élève dessine « le trajet d'une pomme dans le corps ». On compare les dessins, on en tire des questions, et on les reprend en fin de séquence.", null]]
+      } },
+    { id: "analyse-err", t: "Analyser les erreurs pour adapter l'aide", n: "edu", d: "Guide Éduscol du cours moyen",
+      corps: "<p>Le guide du cours moyen découpe la résolution de problèmes en quatre phases : comprendre, modéliser, calculer, répondre. Une grille à quatre colonnes permet de situer l'erreur et donc l'aide à apporter.</p>",
+      q: [["L’intérêt principal de la décomposition en quatre phases proposée dans ce chapitre est de fournir aux professeurs un outil pour structurer l’analyse des productions d’élèves en résolution de problèmes afin d’accompagner les apprentissages.", "guideCM", 57]],
+      classe: {
+        mat: [["En GS, photographier les collections réalisées par les enfants et les classer avec eux : « il a bien compté mais il a oublié de s'arrêter », « elle a pris trop de jetons d'un coup ».", null]],
+        elem: [["Dans une classe de CM2 (période 2), un professeur a préparé quatre problèmes à résoudre pour les élèves.", "guideCM", 57]]
+      } }
+  ]},
+
+  /* ---------------- 5. Différencier ---------------- */
+  { id: "differencier", t: "Comment différencier et aider ?", n: "nav",
+    corps: "<p>Différencier, c'est faire varier les chemins pour que tous atteignent les mêmes objectifs. La conférence de consensus du Cnesco (2017) en a fixé le cadre le plus cité.</p>",
+    e: [
+    { id: "diff-cadre", t: "Les mêmes objectifs pour tous", n: "edu", d: "Cnesco, 2017",
+      q: [["La différenciation pédagogique ne signifie pas la différenciation des objectifs pédagogiques qui conduit à un creusement des inégalités scolaires.", "cnescoDiff", 10],
+          ["Ni l’enseignement « tout collectif », exclusivement en classe entière, ni l’enseignement « tout individualisé » n’est efficace pour faire réussir tous les élèves.", "cnescoDiff", 8]],
+      echos: [["Différencier son enseignement en fonction des rythmes d'apprentissage et des besoins de chacun. Adapter son enseignement aux élèves à besoins éducatifs particuliers.", "Référentiel 2013, P3", "ref2013", null]] },
+    { id: "diff-quoi", t: "Différencier quoi ? Meirieu, Przesmycki", n: "acad", d: "Années 1980-1990",
+      corps: "<p>Halina Przesmycki (<em>La pédagogie différenciée</em>, 1991) distingue ce que l'on peut faire varier : les <strong>contenus</strong>, les <strong>processus</strong> (la manière d'apprendre), les <strong>productions</strong> attendues et les <strong>structures</strong> (groupes, temps, lieux). Elle oppose aussi la différenciation <strong>successive</strong> (on alterne les approches pour toute la classe) et <strong>simultanée</strong> (des tâches différentes au même moment). Philippe Meirieu a popularisé la pédagogie différenciée en France.</p>",
+      echos: [["Il met immédiatement en place, pour ces élèves, une pédagogie différenciée, qui porte sur la consolidation de la conscience phonologique et du principe alphabétique acquis en fin de maternelle", "Cycle 2", "frC2", 4]],
+      classe: {
+        mat: [["En MS, même objectif (dénombrer jusqu'à 6) dans trois ateliers : jetons à déplacer, cartes à points, dé. Les enfants passent dans les trois sur la semaine (différenciation successive).", null]],
+        elem: [["Au CE1, même dictée de mots pour tous, mais trois supports : texte à trous, liste de mots à choisir, dictée complète (différenciation des productions, pas de l'objectif).", null]]
+      } },
+    { id: "diff-moments", t: "Avant, pendant, après la séance", n: "edu", d: "Cnesco, 2017",
+      q: [["Avant l'enseignement : réactiver les connaissances, identifier la nature de ce qui est déjà appris ou encore fragile pour chaque élève, préparer la tâche en fournissant des clés d'accès vers ce qui suit", "cnescoDiff", 11],
+          ["Après l'enseignement : exercer, revoir ce qui n’a pas été compris, vérifier l’autonomie acquise par l’élève sur les objets d’apprentissage.", "cnescoDiff", 11]],
+      classe: {
+        mat: [["En GS, la veille d'une séance sur un album, l'ATSEM ou l'enseignant le lit une première fois à un petit groupe (pré-enseignement) : le lendemain, ces enfants arrivent avec des repères.", null]],
+        elem: [["La table d’appui : un espace d’aide est matérialisé dans la classe ; les élèves sont amenés à y expliciter leur démarche à voix haute et à écouter celle des autres, en présence de l’enseignant.", "cnescoDiff", 10]]
+      } },
+    { id: "etayage", t: "L'étayage, et le risque de sur-étayage", n: "edu",
+      corps: "<p>L'étayage vient de Bruner. Le vademecum de grande section met en garde contre l'excès inverse : trop guider l'élève lui retire le problème.</p>",
+      dev: [["br-etayage", "Les six fonctions de l'étayage"], ["vy-zpd", "La zone proximale de développement"]],
+      q: [["sans pour autant que certains soient à ce point guidés qu’ils ne soient plus en situation de résolution de problème (sur-étayage).", "vadeGS", 18]],
+      echos: [["Adapter, notamment avec les jeunes enfants, les formes de communication en fonction des situations et des activités (posture, interventions, consignes, conduites d'étayage).", "Référentiel 2013, P4", "ref2013", null]],
+      classe: {
+        mat: [["En atelier puzzle, l'enseignant commence par montrer où sont les bords, puis se contente de questions (« tu cherches quelle couleur ? »), puis se retire. Il retire l'aide au fur et à mesure.", null]],
+        elem: [["Au CE2, un « coup de pouce » en trois enveloppes sur la table : relire la consigne, un exemple résolu, un début de schéma. L'élève n'ouvre l'enveloppe suivante que s'il en a besoin.", null]]
+      } },
+    { id: "tutorat", t: "Tutorat et entraide", n: "edu", d: "Cnesco, 2017",
+      abc: ["col", "dis"],
+      q: [["L’intervention d’un élève tuteur, moins formelle que celle de l’enseignant, est un moyen de répondre aux obstacles rencontrés par un élève tutoré. La recherche montre que, pour que cela bénéficie à tous, les tuteurs doivent bénéficier d’une préparation pour accompagner efficacement les turorés.", "cnescoDiff", 12]],
+      classe: {
+        mat: [["En classe multiâge, un GS « parrain » montre à un PS comment ranger son atelier. On apprend au GS à montrer sans faire à la place.", null]],
+        elem: [["Au CM, des « experts » du jour en calcul posé, formés deux minutes avant : ils ont le droit de poser des questions, pas de donner la réponse.", null]]
+      } },
+    { id: "inclusion", t: "Besoins particuliers et accessibilité pour tous", n: "edu",
+      corps: "<p>Le Cnesco propose de penser certaines adaptations pour toute la classe plutôt que pour un seul élève. C'est l'idée de la <strong>conception universelle de l'apprentissage</strong> (CUA, <em>Universal Design for Learning</em>), que le document sur ABC associe aussi à ses cartes.</p>",
+      q: [["Il ne s’agit plus de penser des adaptations individuelles mais d’identifier et de lever pour tous ce qui pourrait constituer un obstacle pour certains.", "cnescoEval", 34],
+          ["Travailler avec les personnes ressources en vue de la mise en œuvre du « projet personnalisé de scolarisation » des élèves en situation de handicap.", "ref2013", null, "off"]],
+      classe: {
+        mat: [["Pictogrammes de l'emploi du temps affichés à hauteur d'enfant pour toute la classe, et pas seulement pour l'élève qui en a besoin.", null]],
+        elem: [["Au CM1, la consigne du problème est lue à voix haute pour tous quand l'objectif n'est pas la lecture : cela lève l'obstacle du décodage sans désigner personne.", null]]
+      } }
+  ]},
+
+  /* ---------------- 6. Évaluer ---------------- */
+  { id: "evaluer", t: "Comment évaluer ?", n: "nav",
+    corps: "<p>L'évaluation sert d'abord à apprendre. La conférence de consensus du Cnesco (2022) parle d'un système « enseigner-apprendre-évaluer ».</p>",
+    e: [
+    { id: "fonctions", t: "Diagnostique, formative, sommative", n: "edu", d: "Cnesco, 2023",
+      corps: "<p>On distingue classiquement l'évaluation <strong>diagnostique</strong> (avant), <strong>formative</strong> (pendant) et <strong>sommative</strong> (après). Le Cnesco rappelle que la recherche dépasse aujourd'hui cette opposition : une évaluation sommative avec des critères et des retours précis peut aussi aider à apprendre.</p>",
+      q: [["formative : identifier des besoins pour réguler son enseignement (pour un enseignant) ou son apprentissage (pour un élève)", "cnescoEval", 12],
+          ["Cette nouvelle approche aurait le mérite de dépasser l’opposition entre évaluation formative et sommative, toujours prégnante dans le monde de l’éducation mais devenue caduque dans les travaux de recherche", "cnescoEval", 24]],
+      echos: [["des évaluations à visée formative", "Cycle 3", "mathsC3", 2]],
+      classe: {
+        mat: [["En début de période, un jeu de cartes rapide en petit groupe pour savoir qui récite la comptine jusqu'à 10, 20 ou 30 : c'est un diagnostic, noté sur une grille, pas une épreuve.", null]],
+        elem: [["Au CE2, une « évaluation-entraînement » de 4 questions en milieu de séquence, corrigée ensemble : elle décide de qui va à l'atelier de reprise le lendemain.", null]]
+      } },
+    { id: "feedback", t: "Le feedback", n: "edu", d: "Cnesco, 2023 ; Hattie",
+      corps: "<p>Le retour fait à l'élève est un des leviers les plus étudiés (John Hattie l'a rendu célèbre ; repère). Le Cnesco donne des règles précises : porter sur la tâche, pas sur la personne, et permettre de réutiliser le retour.</p>",
+      abc: ["pra"],
+      q: [["Être attentif à ne porter aucun jugement de valeur sur un élève (même positif, même avec ironie) et à ne produire un retour que sur les réponses et surtout sur les stratégies mises en œuvre.", "cnescoEval", 31]],
+      classe: {
+        mat: [["« Tu as tracé ton rond en partant d'en haut, c'est ça qui le fait bien fermé » plutôt que « bravo, tu es doué ».", null]],
+        elem: [["Au CM2, l'enseignant annote la rédaction avec deux critères de la grille et une seule chose à améliorer ; l'élève réécrit le paragraphe concerné le lendemain.", null]]
+      } },
+    { id: "autoeval", t: "Auto-évaluation et métacognition", n: "off",
+      corps: "<p>Apprendre à juger son propre travail fait partie des compétences du professeur à développer chez l'élève (P5). Le CSEN ajoute qu'on peut enseigner explicitement comment apprendre.</p>",
+      q: [["Faire comprendre aux élèves les principes de l'évaluation afin de développer leurs capacités d'auto-évaluation.", "ref2013", null, "off"],
+          ["Il est aussi important d’enseigner aux élèves de manière spécifique et explicite comment apprendre, comment gérer leurs propres apprentissages, ce qui peut favoriser leur métacognition et leur autorégulation.", "csen", 15, "edu"]],
+      echos: [["Ils partagent les critères de réussite pour que chacun puisse prendre conscience du chemin qu’il a réalisé et percevoir les progrès qu’il doit encore effectuer.", "Cycle 1", "c1", 5]],
+      classe: {
+        mat: [["En GS, après le découpage, chaque enfant colle un soleil ou un nuage à côté de deux critères dessinés (« j'ai suivi le trait », « j'ai tenu les ciseaux comme il faut »), puis en parle avec l'adulte.", null]],
+        elem: [["Au CM1, avant de rendre une production, l'élève coche lui-même la liste de critères construite avec la classe ; l'enseignant compare ensuite son avis à celui de l'élève.", null]]
+      } },
+    { id: "evalpos", t: "L'évaluation positive en maternelle", n: "off", d: "Programme du cycle 1 ; Éduscol",
+      corps: "<p>À la maternelle, l'évaluation repose sur l'observation et se consigne dans le <strong>carnet de suivi des apprentissages</strong>, puis dans la <strong>synthèse des acquis</strong> en fin de GS.</p>",
+      q: [["Elle repose sur une observation attentive de ce que dit et fait l’élève et sur une interprétation de ses progrès. Elle n’est pas un instrument de prédiction ni de sélection.", "c1", 5, "off"]],
+      classe: {
+        mat: [["Dans le quotidien de la classe, au fil du temps, il prélève des indices, des informations – c’est ce que l’on appelle « faire des observations » - parce qu’ils sont significatifs des progrès voire des acquis attendus.", "evalMat", 2],
+              ["Photo de la tour de 10 cubes réalisée seul, datée, collée dans le carnet de suivi avec une phrase dictée par l'enfant : « j'ai fait une tour toute seule ».", null]],
+        elem: []
+      } }
+  ]},
+
+  /* ---------------- 7. Rendre les élèves actifs ---------------- */
+  { id: "actifs", t: "Comment rendre les élèves actifs ?", n: "nav",
+    corps: "<p>Les pédagogies actives viennent de l'Éducation nouvelle, au début du 20e siècle : l'enfant apprend en agissant, en cherchant et en coopérant. Une précision s'impose d'abord : « actif » ne veut pas dire « qui bouge ».</p>",
+    dev: [["actives", "Pédagogies actives, Éducation nouvelle"]],
+    e: [
+    { id: "actif-sens", t: "Ce que « actif » veut dire", n: "edu",
+      corps: "<p>Pour les sciences cognitives, l'engagement actif est d'abord mental : faire des hypothèses, reformuler, chercher. Une activité manuelle peut laisser l'esprit passif, et une écoute peut être très active.</p>",
+      q: [["Un engagement actif implique de générer des hypothèses ou des modèles mentaux, de reformuler en mots ou en pensées qui font sens pour soi, etc. (Dehaene, 2018).", "csen", 6]],
+      echos: [["si la manipulation est un passage essentiel, la réussite d’une activité manipulatoire ne suffit cependant pas pour attester de la compréhension de la notion mathématique qui la sous-tend.", "Cycle 2", "mathsC2", 2]] },
+    { id: "dewey", t: "Dewey et l'Éducation nouvelle", n: "form", d: "John Dewey (1859-1952)",
+      corps: "<p>Dewey défend une école où l'on apprend par l'expérience, à partir de problèmes réels (<em>learning by doing</em>). Le mouvement de l'Éducation nouvelle réunit ensuite Decroly, Montessori, Freinet, Ferrière et d'autres. L'INSPÉ de Lille aborde les pédagogies actives dans son cours d'histoire de l'enseignement.</p>",
+      dev: [["dewey", "Dewey : learning by doing"], ["educnouv", "Freinet, Montessori, Decroly"]],
+      q: [["Étude de l’évolution des méthodes pédagogiques réellement mises en œuvre dans les classes du primaire est à opérer, tout comme celle des tentatives de réformes au nom des « pédagogies actives ».", "lille", 14, "form"]],
+      abc: ["enq", "pro"] },
+    { id: "freinet", t: "Freinet : coopérer, s'exprimer, tâtonner", n: "form", d: "Célestin Freinet (1896-1966) ; ICEM",
+      corps: "<p>Freinet invente des <strong>techniques</strong> plus qu'une méthode : texte libre, imprimerie et journal scolaire, correspondance, « Quoi de neuf ? », conseil de coopérative, plan de travail, fichiers autocorrectifs. En 1964, il les résume en 30 « invariants pédagogiques ». L'Institut coopératif de l'École moderne (ICEM) fait vivre ce mouvement.</p>",
+      dev: [["freinet", "Freinet"]],
+      abc: ["pro", "col", "dis"],
+      q: [["INVARIANT n° 24 : La vie nouvelle de l'Ecole suppose la coopération scolaire, c'est-à-dire la gestion par les usagers, l'éducateur compris, de la vie et du travail scolaire.", "icem", 1, "form"],
+          ["La coopération est l'un des 5 piliers de la pédagogie Freinet, avec : • le tâtonnement expérimental • la méthode naturelle d'apprentissage • le travail individualisé • l'expression libre", "icem", 1, "form"]],
+      classe: {
+        mat: [["Moi, l'enseignante, j'aurais pu simplement le mesurer. Mais j'ai sauté sur l'occasion pour mettre les élèves en situation de tâtonnement sur une recherche qui faisait sens pour eux.", "icem", 3],
+              ["Le « Quoi de neuf ? » du lundi en MS : trois enfants apportent un objet ou une nouvelle, les autres posent des questions, et l'enseignant note une phrase de chacun pour le cahier de vie.", null]],
+        elem: [["Travail individualisé et outils édités par l’ICEM : plan de travail, cahier de suivi, fichiers d’autonomie… Pour que les élèves soient acteurs et auteurs de leurs apprentissages, une bonne organisation s’impose !", "icem", 2],
+               ["Au CE2, un texte libre par semaine : l'auteur le lit, la classe choisit un texte à « toiletter » ensemble au tableau, puis il est publié dans le journal ou envoyé aux correspondants.", null]]
+      } },
+    { id: "montessori", t: "Montessori : un milieu préparé", n: "acad", d: "Maria Montessori (1870-1952)",
+      corps: "<p>Montessori, médecin, conçoit un <strong>environnement préparé</strong> avec un matériel autocorrectif : l'enfant choisit son activité, la répète autant qu'il veut et voit seul s'il a réussi. L'adulte observe et présente le matériel. Les « lettres rugueuses » et le « matériel sensoriel » sont les plus connus.</p><p>Au CRPE, mieux vaut parler d'<strong>inspiration</strong> montessorienne : une classe publique emprunte des principes et des outils, pas l'ensemble de la méthode.</p>",
+      dev: [["montessori", "Montessori"]],
+      abc: ["pra", "enq"],
+      echos: [["Ils veillent à diversifier les formes des exercices proposés en limitant le recours aux fiches.", "Cycle 1", "c1", 4]],
+      classe: {
+        mat: [["Plateaux de transvasement en PS (graines, pinces, cuillères) en libre accès, présentés une fois par l'adulte en gestes lents, puis repris librement par l'enfant.", null]],
+        elem: [["Au CE1, des barrettes et perles de numération en libre accès pendant le plan de travail, avec une fiche de vérification au dos des cartes.", null]]
+      } },
+    { id: "decroly", t: "Decroly : centres d'intérêt et approche globale", n: "acad", d: "Ovide Decroly (1871-1932)",
+      corps: "<p>Decroly organise les apprentissages autour de <strong>centres d'intérêt</strong> liés aux besoins de l'enfant (se nourrir, se protéger…), selon trois temps : observer, associer, exprimer. Il défend une entrée <strong>globale</strong> dans la lecture, à partir de phrases qui ont du sens pour l'enfant. C'est cet héritage que les guides récents critiquent (branche « Les débats »).</p>",
+      dev: [["decroly", "Decroly"]],
+      abc: ["enq", "pro"],
+      classe: {
+        mat: [["En MS, un mois autour de « la boulangerie » : visite, recette du pain, imagier, coin jeu symbolique boulangerie, comptine. Le thème relie les domaines.", null]],
+        elem: [["Au CM1, une enquête sur l'alimentation de la classe relie sciences (groupes d'aliments), mathématiques (diagramme) et production d'écrit (affiche).", null]]
+      } },
+    { id: "projet", t: "La pédagogie de projet", n: "off", d: "Programme du cycle 1",
+      corps: "<p>Le projet donne un but réel à des apprentissages : un spectacle, un jardin, un livre, une exposition. Le risque, connu, est que la réalisation prenne le pas sur l'apprentissage : il faut identifier ce que chaque étape fait apprendre.</p>",
+      abc: ["pro", "col"],
+      q: [["Ils développent la capacité des élèves à s’engager à travers des projets, pour réaliser des productions adaptées à leurs possibilités.", "c1", 4, "off"]],
+      classe: {
+        mat: [["En GS, écrire un imagier de la classe pour les futurs PS : choisir les mots, photographier, dicter les légendes à l'adulte, l'offrir en juin.", null]],
+        elem: [["Au CM2, une exposition sur l'histoire du quartier pour les parents : recherche documentaire, interview d'un ancien, cartels écrits et relus, visite guidée par les élèves.", null]]
+      } },
+    { id: "coop", t: "Coopération et pédagogie institutionnelle", n: "form", d: "Fernand Oury (1920-1998) ; Sylvain Connac",
+      corps: "<p>Fernand Oury prolonge Freinet avec la <strong>pédagogie institutionnelle</strong> : la classe se dote d'institutions (conseil, métiers, ceintures de compétences) qui règlent la vie commune et protègent chacun. Aujourd'hui, Sylvain Connac travaille sur les pédagogies coopératives ; l'INSPÉ de Lille le cite dans ses bibliographies.</p>",
+      abc: ["col", "dis"],
+      q: [["CONNAC S, Apprendre avec les pédagogies coopératives: démarches et outils pour l’école ESF, 2009", "lille", 37, "form"]],
+      echos: [["Ils sont associés à certaines décisions les concernant et découvrent ainsi les fondements de la coopération et du débat.", "Cycle 1", "c1", 5]],
+      classe: {
+        mat: [["En maternelle : du conseil au quoi de neuf, des présentations de recherche ou de constructions à l’aménagement de la récréation… dès 3ans !", "icem", 2]],
+        elem: [["Conseil de coopération du vendredi au CM1 : une boîte à mots (je propose, je critique, je félicite) ; un président et un secrétaire élèves ; les décisions sont écrites et relues la semaine suivante.", null]]
+      } }
+  ]},
+
+  /* ---------------- 8. Maternelle ---------------- */
+  { id: "maternelle", t: "Apprendre à l'école maternelle", n: "nav",
+    corps: "<p>Le programme du cycle 1 décrit quatre manières d'apprendre propres à la maternelle. Elles structurent la conception des situations, et chacune correspond à des types ABC différents.</p>",
+    e: [
+    { id: "m-jouer", t: "Apprendre en jouant", n: "off",
+      dev: [["jeu", "Le jeu comme objet d'étude"]],
+      abc: ["enq", "pra", "col"],
+      q: [["Les jeux proposés par les professeurs sont structurés et visent explicitement des apprentissages spécifiques.", "c1", 4, "off"],
+          ["Dans un jeu libre, l’enfant choisit quand et comment il joue, dans un cadre temporel et spatial imparti. Il prend ses propres décisions.", "jeu", 7, "edu"]],
+      corps: "<p>Éduscol distingue le <strong>jeu libre</strong>, où l'enfant décide, et le <strong>jeu structuré</strong>, conçu par l'enseignant pour un apprentissage précis. Les deux sont nécessaires.</p>",
+      classe: {
+        mat: [["Coin marchande en MS : d'abord en jeu libre ; puis le même coin devient jeu structuré avec une liste de courses en images et une consigne (« achète exactement 3 pommes »).", null]],
+        elem: [["Au CP, un jeu de l'oie des syllabes : on avance seulement si on lit la syllabe de la case. Le jeu sert l'entraînement au décodage.", null]]
+      } },
+    { id: "m-reflechir", t: "Apprendre en réfléchissant et en résolvant des problèmes", n: "off",
+      abc: ["enq", "dis"],
+      q: [["Ces activités cognitives de haut niveau sont fondamentales pour leur donner l’envie d’apprendre et les rendre autonomes intellectuellement.", "c1", 4, "off"]],
+      classe: {
+        mat: [["Construire un pont en Kapla entre deux chaises : les enfants essaient, ça tombe, on regarde ensemble pourquoi, on recommence avec une idée nouvelle.", null]],
+        elem: []
+      } },
+    { id: "m-exercer", t: "Apprendre en s'exerçant", n: "off",
+      abc: ["pra"],
+      q: [["Leur stabilisation nécessite de nombreuses répétitions dans des conditions variées.", "c1", 4, "off"]],
+      classe: {
+        mat: [["Le même geste (tracer des ronds) sur des supports variés : sable, tableau vertical, peinture au doigt, ardoise. On s'exerce sans répéter la même fiche.", null]],
+        elem: []
+      } },
+    { id: "m-memoriser", t: "Apprendre en mémorisant", n: "off",
+      abc: ["pra", "acq"],
+      q: [["Ils proposent des situations dont l’objectif est de faire mémoriser des comptines, des chansons, des poésies, des récits ou des histoires.", "c1", 5, "off"]],
+      classe: {
+        mat: [["Une comptine dite chaque jour pendant deux semaines, d'abord avec les gestes de l'adulte, puis par les enfants seuls, puis reprise un mois plus tard pour vérifier qu'elle est restée.", null]],
+        elem: []
+      } },
+    { id: "kergomard", t: "Pauline Kergomard et l'école maternelle", n: "acad", d: "Pauline Kergomard (1838-1925)",
+      corps: "<p>Inspectrice générale, Pauline Kergomard transforme les « salles d'asile » en <strong>écoles maternelles</strong> (décret de 1881). Elle combat les exercices scolaires imposés aux petits et défend le jeu, le mouvement et la bienveillance. On lui attribue la formule « le jeu, c'est le travail de l'enfant ».</p>",
+      dev: [["jeu", "Le jeu comme objet d'étude"]] },
+    { id: "m-ensemble", t: "Apprendre ensemble et vivre ensemble", n: "off",
+      abc: ["col", "dis"],
+      q: [["Elle structure les apprentissages autour d’un enjeu de formation central pour les élèves : « Apprendre ensemble et vivre ensemble ».", "c1", 5, "off"]] }
+  ]},
+
+  /* ---------------- 9. Débats ---------------- */
+  { id: "debats", t: "Les débats", n: "nav",
+    corps: "<p>Plusieurs questions divisent chercheurs, formateurs et enseignants. Au CRPE, on attend qu'un candidat connaisse les positions et sache les situer, pas qu'il tranche à la place de la recherche.</p>",
+    e: [
+    { id: "deb-decouverte", t: "Enseignement explicite ou découverte ?", n: "edu",
+      corps: "<p>Le CSEN défend l'efficacité de l'enseignement explicite, surtout pour les élèves les plus fragiles et les nouvelles notions. Le Cnesco, de son côté, refuse l'idée d'une « recette » unique. Les deux convergent sur un point : les approches très peu guidées réussissent mal aux élèves en difficulté.</p><p>Le CSEN écrit lui-même que l'enseignement explicite est « souvent mal compris, voire décrié ».</p>",
+      q: [["De fait, une méta-analyse récente montre que commencer une activité d’enseignement par une phase de découverte a des effets négatifs sur les apprentissages des élèves d’école primaire (Sinha & Kapur, 2021)", "csen", 14],
+          ["Aucune méthode d’enseignement n’est infaillible et ne peut garantir à elle seule le succès de tous les élèves.", "csen", 14],
+          ["La recherche montre que les approches laissant trop de liberté aux élèves ne sont pas les plus efficaces notamment pour les élèves qui rencontrent le plus de difficultés scolaires.", "cnescoDiff", 11]] },
+    { id: "deb-centre", t: "« Centré sur l'élève » ou « centré sur l'enseignant » ?", n: "edu",
+      corps: "<p>Le CSEN conteste cette opposition : pour lui, un enseignant qui guide fortement peut être très attentif aux besoins des élèves. Les défenseurs des pédagogies actives répondent que l'autonomie et la coopération sont aussi des objectifs. L'attendu A15 de la formation tient les deux ensemble.</p>",
+      q: [["En réalité, ces étiquettes ont été forgées par les tenants de ces dernières approches pour les mettre en valeur", "csen", 6]],
+      s: ["lille"] },
+    { id: "deb-lecture", t: "Les méthodes de lecture", n: "edu",
+      corps: "<p>Le guide du CP de 2019 tranche pour un enseignement systématique des correspondances graphèmes-phonèmes et critique la méthode globale, en citant Dehaene. Il reconnaît pourtant l'intention de départ de cette méthode.</p>",
+      q: [["La méthode globale est issue d’une idée généreuse : refuser le “dressage” des enfants, que l’école primaire est parfois accusée de transformer en petites mécaniques à ânonner “pa, pe, pi,po, pu, papa a le tutu de Lili”.", "guideCP", 35]],
+      echos: [["L’utilisation d’un manuel de lecture contribue à garantir une programmation de l’étude des correspondances graphophonémiques (CGP), à un tempo suffisamment rapide", "Cycle 2", "frC2", 3]] },
+    { id: "deb-liberte", t: "Liberté pédagogique et guides", n: "off",
+      corps: "<p>Les guides Éduscol se présentent comme « fondés sur l'état de la recherche » et recommandent des pratiques précises. Le référentiel, lui, rappelle la liberté pédagogique, encadrée par les programmes. Savoir articuler les deux est une question fréquente à l'entretien.</p>",
+      q: [["Disposant d'une liberté pédagogique reconnue par la loi, ils exercent leur responsabilité dans le respect des programmes et des instructions du ministre de l'éducation nationale", "ref2013", null, "off"]] },
+    { id: "deb-styles", t: "Les « styles d'apprentissage »", n: "form",
+      corps: "<p>L'idée qu'il faudrait enseigner selon le profil visuel, auditif ou kinesthésique de chaque élève est très répandue mais n'est pas confirmée par la recherche. ABC Learning Design prend soin de s'en distinguer.</p>",
+      q: [["Rather than describing fixed characteristics or preferences of learners, these learning types refer to different kinds of learning activities and pedagogical approaches that can be designed into a course.", "abcRPF", 1, "form"]] }
+  ]}
+  ]
+};
+
+/* ---------- Index ---------- */
+const PAR_ID = new Map();
+(function indexer(n, parent, prof) {
+  n.parent = parent; n.prof = prof; PAR_ID.set(n.id, n);
+  (n.e || []).forEach(c => indexer(c, n, prof + 1));
+})(ARBRE, null, 0);
+
+const ouverts = new Set(["racine"]);
+const NIV_FILTRES = ["off", "edu", "form", "acad"];
+const actifs = new Set(NIV_FILTRES);
+let selection = "racine";
+let requete = "";
+let vue = "carte";
+
+function echap(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function sansAccents(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); }
+function texteNoeud(n) {
+  const parts = [n.t, n.d || "", n.corps || ""];
+  (n.q || []).forEach(q => parts.push(q[0]));
+  (n.echos || []).forEach(e => parts.push(e[0]));
+  if (n.classe) ["mat", "elem"].forEach(k => (n.classe[k] || []).forEach(x => parts.push(x[0])));
+  (n.abc || []).forEach(a => parts.push(ABC[a]));
+  return sansAccents(parts.join(" ").replace(/<[^>]+>/g, " "));
+}
+const TEXTES = new Map([...PAR_ID.values()].map(n => [n.id, texteNoeud(n)]));
+function correspond(n) { return requete && TEXTES.get(n.id).includes(requete); }
+function visibleNiveau(n) { return n.n === "nav" || actifs.has(n.n); }
+function sousArbreCorrespond(n) { return correspond(n) || (n.e || []).some(sousArbreCorrespond); }
+function pastille(k, taille) { return `<span class="pt" style="display:inline-block;width:${taille}px;height:${taille}px;border-radius:50%;background:var(${NIVEAUX[k].c})"></span>`; }
+
+/* ---------- Légende et filtres ---------- */
+const filtres = document.getElementById("filtres");
+const leg = document.getElementById("leg");
+NIV_FILTRES.forEach(k => {
+  const N = NIVEAUX[k];
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "chip"; b.id = "f-" + k;
+  b.setAttribute("aria-pressed", "true");
+  b.innerHTML = `<span class="pt" style="background:var(${N.c})"></span>${N.court}`;
+  b.title = N.nom;
+  b.addEventListener("click", () => {
+    if (actifs.has(k)) actifs.delete(k); else actifs.add(k);
+    b.setAttribute("aria-pressed", actifs.has(k) ? "true" : "false");
+    rendre();
+  });
+  filtres.appendChild(b);
+});
+[...NIV_FILTRES, "piste"].forEach(k => {
+  const N = NIVEAUX[k];
+  leg.insertAdjacentHTML("beforeend", `<dt>${k === "piste" ? `<span class="pt piste-pt"></span>` : pastille(k, 10)}${N.nom}</dt><dd>${N.def}</dd>`);
+});
+leg.insertAdjacentHTML("beforeend", `<dt><span class="abc-mini">ABC</span>Types d'apprentissage</dt><dd>Les six types de la grille ABC Learning Design (acquisition, enquête, discussion, collaboration, pratique, production). Leur attribution à chaque méthode est une proposition de cette carte, pas une classification officielle.</dd>`);
+
+/* ---------- Carte (SVG) ---------- */
+const mesure = document.createElement("canvas").getContext("2d");
+function largeur(n) {
+  mesure.font = n.prof === 0 ? "700 15px 'Familjen Grotesk', sans-serif" : n.prof === 1 ? "600 14px 'Familjen Grotesk', sans-serif" : "13px 'Atkinson Hyperlegible', sans-serif";
+  return Math.ceil(mesure.measureText(n.t).width) + (n.e ? 40 : 24);
+}
+function rendreCarte() {
+  const zone = document.getElementById("carte");
+  const LIGNE = 34, ECART = 46, MARGE = 16;
+  const colL = [];
+  (function m(n) { colL[n.prof] = Math.max(colL[n.prof] || 0, largeur(n)); if (ouverts.has(n.id)) (n.e || []).forEach(m); })(ARBRE);
+  const colX = [MARGE]; for (let i = 1; i < colL.length; i++) colX[i] = colX[i - 1] + colL[i - 1] + ECART;
+  let rang = 0; const pos = new Map();
+  (function placer(n) {
+    const enf = ouverts.has(n.id) ? (n.e || []) : [];
+    if (!enf.length) { pos.set(n.id, MARGE + rang * LIGNE + LIGNE / 2); rang++; return; }
+    enf.forEach(placer);
+    pos.set(n.id, (pos.get(enf[0].id) + pos.get(enf[enf.length - 1].id)) / 2);
+  })(ARBRE);
+  const H = MARGE * 2 + rang * LIGNE;
+  const W = colX[colX.length - 1] + colL[colL.length - 1] + MARGE;
+  let liens = "", noeuds = "";
+  (function dessiner(n) {
+    const x = colX[n.prof], y = pos.get(n.id), w = largeur(n), h = 26;
+    const enf = ouverts.has(n.id) ? (n.e || []) : [];
+    enf.forEach(c => {
+      const x1 = x + w, y1 = y, x2 = colX[c.prof], y2 = pos.get(c.id), mx = (x1 + x2) / 2;
+      liens += `<path class="lien" d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}"/>`;
+      dessiner(c);
+    });
+    const N = NIVEAUX[n.n];
+    const cls = ["nd", "d" + Math.min(n.prof, 2)];
+    if (n.id === selection) cls.push("sel");
+    if (!visibleNiveau(n)) cls.push("dim");
+    if (requete && correspond(n)) cls.push("hit");
+    else if (requete && !sousArbreCorrespond(n)) cls.push("dim");
+    const fill = n.n === "nav" ? "var(--surface)" : `var(${N.bg})`;
+    const stroke = n.n === "nav" ? "var(--ink)" : `var(${N.c})`;
+    const pm = n.e ? `<text class="pm" x="${x + w - 16}" y="${y + 4}">${ouverts.has(n.id) ? "−" : "+"}</text>` : "";
+    noeuds += `<g class="${cls.join(" ")}" data-id="${n.id}" tabindex="0" role="button" aria-label="${echap(n.t)}">
+      <rect x="${x}" y="${y - h / 2}" width="${w}" height="${h}" rx="${n.prof === 0 ? 13 : 7}" fill="${fill}" stroke="${stroke}"/>
+      <text x="${x + 11}" y="${y + 4.5}">${echap(n.t)}</text>${pm}</g>`;
+  })(ARBRE);
+  zone.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="tree" aria-label="Carte mentale de la pédagogie et de la didactique">${liens}${noeuds}</svg>`;
+  zone.querySelectorAll(".nd").forEach(g => {
+    const act = () => activer(g.dataset.id, true);
+    g.addEventListener("click", act);
+    g.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); act(); } });
+  });
+}
+
+/* ---------- Plan (liste) ---------- */
+function rendrePlan() {
+  const zone = document.getElementById("plan");
+  function li(n) {
+    const N = NIVEAUX[n.n];
+    const ouvert = ouverts.has(n.id);
+    const cls = [];
+    if (!visibleNiveau(n)) cls.push("dim");
+    if (requete && correspond(n)) cls.push("hit");
+    else if (requete && !sousArbreCorrespond(n)) cls.push("dim");
+    const pt = n.n === "nav" ? `<span class="pt" style="border:1.5px solid var(--ink)"></span>` : `<span class="pt" style="background:var(${N.c})"></span>`;
+    const tw = n.e ? (ouvert ? "−" : "+") : "";
+    let h = `<li class="${cls.join(" ")}"><button type="button" class="ligne${n.id === selection ? " sel" : ""}" data-id="${n.id}" ${n.e ? `aria-expanded="${ouvert}"` : ""}><span class="tw">${tw}</span>${pt}<span class="lab lvl${Math.min(n.prof, 2)}">${echap(n.t)}</span></button>`;
+    if (n.e && ouvert) h += `<ul class="pl">${n.e.map(li).join("")}</ul>`;
+    return h + "</li>";
+  }
+  zone.innerHTML = `<ul class="pl">${li(ARBRE)}</ul>`;
+  zone.querySelectorAll(".ligne").forEach(b => b.addEventListener("click", () => activer(b.dataset.id, true)));
+}
+
+/* ---------- Fiche ---------- */
+function citeSource(k, p) { return `${echap(S[k].l)}${p ? `, p. ${p}` : ""}`; }
+function exemple(x) {
+  const [txt, k, p] = x;
+  if (k) return `<div class="ex"><p>« ${echap(txt)} »</p><cite>${citeSource(k, p)}</cite></div>`;
+  return `<div class="ex piste"><span class="tag">Piste</span><p>${echap(txt)}</p></div>`;
+}
+function rendreFiche() {
+  const n = PAR_ID.get(selection);
+  const f = document.getElementById("fiche");
+  if (!n) { f.innerHTML = `<p class="vide">Choisis un nœud de la carte.</p>`; return; }
+  const N = NIVEAUX[n.n];
+  let h = "";
+  if (n.n !== "nav") h += `<span class="badge" style="color:var(${N.c});background:var(${N.bg})">${N.nom}</span>`;
+  const chemin = []; for (let p = n.parent; p; p = p.parent) chemin.unshift(p);
+  if (chemin.length) h += `<p class="dates" style="margin:8px 0 0">${chemin.map(p => `<a href="#${p.id}" data-id="${p.id}">${echap(p.t)}</a>`).join(" › ")}</p>`;
+  h += `<h2>${echap(n.t)}</h2>`;
+  if (n.d) h += `<p class="dates">${echap(n.d)}</p>`;
+  if (n.abc && n.abc.length) h += `<p class="abc" aria-label="Types d'apprentissage ABC dominants"><span class="abc-mini">ABC</span>${n.abc.map(a => `<span>${ABC[a]}</span>`).join("")}</p>`;
+  if (n.corps) h += n.corps;
+  if (n.q && n.q.length) {
+    h += `<h3>Ce que dit la source</h3>`;
+    n.q.forEach(([txt, k, p, nv]) => {
+      h += `<blockquote class="${nv || ""}"><p>« ${echap(txt)} »</p><cite>${citeSource(k, p)}</cite></blockquote>`;
+    });
+  }
+  if (n.echos && n.echos.length) {
+    h += `<h3>Écho dans les textes officiels</h3>`;
+    n.echos.forEach(([txt, lab, k, p]) => {
+      h += `<div class="echo"><p>« ${echap(txt)} »</p><p class="note">${echap(lab)} : ${citeSource(k, p)}.</p></div>`;
+    });
+    if (n.n === "acad" || n.n === "form") h += `<p class="dates">Rapprochement proposé pour l'oral : le texte officiel ne cite pas d'auteur.</p>`;
+  }
+  if (n.classe) {
+    const mat = n.classe.mat || [], elem = n.classe.elem || [];
+    if (mat.length || elem.length) {
+      h += `<h3>En classe</h3><div class="classe">`;
+      if (mat.length) h += `<h4>Maternelle</h4>${mat.map(exemple).join("")}`;
+      if (elem.length) h += `<h4>Élémentaire</h4>${elem.map(exemple).join("")}`;
+      h += `</div>`;
+    }
+  }
+  if (n.dev && n.dev.length) {
+    h += `<h3>Dans la carte du développement</h3><ul class="srcs">${n.dev.map(([id, t]) => `<li><a href="${DEV}#${id}" target="_blank" rel="noopener">${echap(t)} ↗</a></li>`).join("")}</ul>`;
+  }
+  if (n.e && n.e.length) {
+    h += `<h3>Sous-thèmes</h3><div class="enfants">${n.e.map(c => `<button type="button" data-id="${c.id}">${c.n === "nav" ? "" : pastille(c.n, 8)}${echap(c.t)}</button>`).join("")}</div>`;
+  }
+  const cles = [...new Set([
+    ...(n.s || []), ...(n.q || []).map(q => q[1]), ...(n.echos || []).map(e => e[2]),
+    ...(n.classe ? [...(n.classe.mat || []), ...(n.classe.elem || [])].map(x => x[1]).filter(Boolean) : [])
+  ])];
+  if (cles.length) {
+    h += `<h3>Sources</h3><ul class="srcs">${cles.map(k => `<li><a href="${S[k].u}" target="_blank" rel="noopener">${echap(S[k].l)}</a></li>`).join("")}</ul>`;
+  }
+  if (n.n === "acad") {
+    h += `<p class="dates">Repère de manuel : les documents consultés ne développent pas ce contenu. Vérifie-le dans un manuel de sciences de l'éducation avant de le citer.</p>`;
+  }
+  f.innerHTML = h;
+  f.querySelectorAll("[data-id]").forEach(el => el.addEventListener("click", ev => { ev.preventDefault(); activer(el.dataset.id, false); }));
+}
+
+function activer(id, basculer) {
+  const n = PAR_ID.get(id);
+  if (basculer && n.e && selection === id) { if (ouverts.has(id)) ouverts.delete(id); else ouverts.add(id); }
+  else if (n.e) ouverts.add(id);
+  for (let p = n.parent; p; p = p.parent) ouverts.add(p.id);
+  selection = id;
+  try { history.replaceState(null, "", "#" + id); } catch (e) {}
+  rendre();
+  if (window.matchMedia("(max-width: 880px)").matches && !basculer) document.getElementById("fiche").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function rendre() {
+  if (vue === "carte") rendreCarte(); else rendrePlan();
+  rendreFiche();
+}
+
+/* ---------- Contrôles ---------- */
+function choisirVue(v) {
+  vue = v;
+  document.getElementById("v-carte").setAttribute("aria-pressed", v === "carte");
+  document.getElementById("v-plan").setAttribute("aria-pressed", v === "plan");
+  document.getElementById("carte").hidden = v !== "carte";
+  document.getElementById("plan").hidden = v !== "plan";
+  try { localStorage.setItem("carte-peda-vue", v); } catch (e) {}
+  rendre();
+}
+document.getElementById("v-carte").addEventListener("click", () => choisirVue("carte"));
+document.getElementById("v-plan").addEventListener("click", () => choisirVue("plan"));
+document.getElementById("tout").addEventListener("click", () => { PAR_ID.forEach(n => { if (n.e) ouverts.add(n.id); }); rendre(); });
+document.getElementById("rien").addEventListener("click", () => { ouverts.clear(); ouverts.add("racine"); rendre(); });
+document.getElementById("q").addEventListener("input", ev => {
+  requete = sansAccents(ev.target.value.trim());
+  if (requete) PAR_ID.forEach(n => { if (n.e && sousArbreCorrespond(n)) ouverts.add(n.id); });
+  rendre();
+});
+window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (PAR_ID.has(id) && id !== selection) activer(id, false); });
+
+/* ---------- Démarrage ---------- */
+let vueInit = window.matchMedia("(max-width: 880px)").matches ? "plan" : "carte";
+try { const v = localStorage.getItem("carte-peda-vue"); if (v === "carte" || v === "plan") vueInit = v; } catch (e) {}
+const h0 = location.hash.slice(1);
+if (PAR_ID.has(h0)) { selection = h0; ouverts.add(h0); for (let p = PAR_ID.get(h0).parent; p; p = p.parent) ouverts.add(p.id); }
+choisirVue(vueInit);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (vue === "carte") rendreCarte(); });
+</script>
+</body>
+</html>
