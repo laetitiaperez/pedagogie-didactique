@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Carte de la pédagogie et de la didactique, gabarit repris de la carte du développement de l'enfant. Mise en page : barre d'outils collante, carte arborescente à gauche (défilable), fiche de lecture à droite ; une colonne sur téléphone, vue « Plan » par défaut. */
+/* Carte des techniques didactiques et pédagogiques. Mise en page : barre d'outils collante, carte arborescente à gauche (défilable), fiche de lecture à droite ; une colonne sur téléphone, vue « Plan » par défaut. */
 :root {
   --bg: #f3f5f8;
   --surface: #ffffff;
@@ -208,8 +208,6 @@ const ABC = {
   acq: "Acquisition", enq: "Enquête", dis: "Discussion", col: "Collaboration", pra: "Pratique", pro: "Production"
 };
 
-const DEV = "https://laetitiaperez.github.io/developpement-enfant/";
-
 const S = {
   ref2013: { l: "Référentiel des compétences professionnelles des métiers du professorat et de l'éducation, arrêté du 1er juillet 2013, BO n° 30 du 25 juillet 2013", u: "https://www.education.gouv.fr/bo/13/Hebdo30/MENE1315928A.htm" },
   c1: { l: "Programme du cycle 1, version consolidée (BO n° 41 du 31 octobre 2024 et BO n° 19 du 7 mai 2026)", u: "https://eduscol.education.gouv.fr/sites/default/files/document/programme-cycle-1-consolide-127565.pdf" },
@@ -235,10 +233,10 @@ const S = {
 // q : citations [texte, clé source, page, niveau de la bordure]
 // echos : [[citation, étiquette, clé source, page]] : rapprochements avec les programmes
 // classe : { mat: [...], elem: [...] } ; chaque exemple = [texte, clé source ou null, page] ; sans clé, c'est une piste
-// abc : types d'apprentissage dominants (grille ABC) ; dev : [[id, titre]] dans la carte du développement
+// abc : types d'apprentissage dominants (grille ABC) 
 const ARBRE = {
   id: "racine", t: "Pédagogie et didactique à l'école primaire", n: "nav",
-  corps: "<p>La carte est organisée par les questions que se pose l'enseignant : comment les élèves apprennent, comment concevoir une séance, que faire de l'erreur, comment différencier, évaluer, rendre les élèves actifs, et ce que la maternelle a de particulier. Une dernière branche rassemble les débats.</p><p>Chaque méthode a un encadré <strong>En classe</strong>, avec un volet maternelle et un volet élémentaire. Les exemples tirés d'un document sont cités ; les autres sont marqués <strong>Piste</strong>.</p><p>Les étiquettes <strong>ABC</strong> indiquent les types d'apprentissage dominants de chaque méthode, selon la grille ABC Learning Design (branche « Concevoir »).</p>",
+  corps: "<p>La carte rassemble les techniques didactiques et pédagogiques, organisées par les questions que se pose l'enseignant : comment concevoir une séance, que faire de l'erreur, comment différencier, évaluer, rendre les élèves actifs, et ce que la maternelle a de particulier. Une dernière branche rassemble les débats.</p><p>Chaque méthode a un encadré <strong>En classe</strong>, avec un volet maternelle et un volet élémentaire. Les exemples tirés d'un document sont cités ; les autres sont marqués <strong>Piste</strong>.</p><p>Les étiquettes <strong>ABC</strong> indiquent les types d'apprentissage dominants de chaque méthode, selon la grille ABC Learning Design (branche « Concevoir »).</p>",
   e: [
 
   /* ---------------- 1. Le cadre ---------------- */
@@ -274,50 +272,6 @@ const ARBRE = {
     { id: "constat", t: "Ce que les programmes disent, et ne disent pas", n: "nav",
       corps: "<p>Les programmes ne citent aucun pédagogue ni didacticien. Ils en emploient pourtant le vocabulaire : <em>institutionnaliser</em> (Brousseau), <em>obstacle</em> (Bachelard), <em>étayage</em> (Bruner). Depuis 2024, les programmes du cycle 2 placent tout l'enseignement « dans le cadre d'un enseignement explicite, structuré et progressif ».</p><p>À l'oral, on peut donc dire : « le programme emploie ce terme ; il vient de tel auteur ». C'est un rapprochement, pas une citation.</p>",
       echos: [["Tout comme l’ensemble des domaines du cycle 2, l’enseignement des mathématiques participe à établir les savoirs fondamentaux des élèves dans le cadre d’un enseignement explicite, structuré et progressif.", "Cycle 2", "mathsC2", 2]] }
-  ]},
-
-  /* ---------------- 2. Comment les élèves apprennent ---------------- */
-  { id: "apprendre", t: "Comment les élèves apprennent-ils ?", n: "nav",
-    corps: "<p>Quatre grandes familles de théories de l'apprentissage. Elles ne se succèdent pas comme des modes : chacune éclaire un aspect, et les programmes actuels en combinent plusieurs.</p>",
-    e: [
-    { id: "behav", t: "Behaviorisme : renforcer les réponses", n: "acad", d: "Watson, Skinner (années 1910-1950)",
-      corps: "<p>Pour le behaviorisme, apprendre, c'est modifier un comportement observable. Skinner décrit le <strong>conditionnement opérant</strong> : une réponse suivie d'un renforcement a plus de chances de se reproduire. Il en tire l'<strong>enseignement programmé</strong> : découper le contenu en petites étapes, faire répondre l'élève à chacune et lui donner aussitôt le résultat.</p><p>Ce qui en reste à l'école : l'entraînement fréquent, le découpage en étapes et le retour immédiat. La limite : le modèle ne dit rien de ce qui se passe dans la tête de l'élève.</p>",
-      abc: ["pra"],
-      echos: [["Afin de s’assurer de l’acquisition des automatismes attendus par tous les élèves, des séances quotidiennes de calcul mental sont proposées tout au long du cycle 2.", "Cycle 2", "mathsC2", 2]],
-      classe: {
-        mat: [["Jeu de loto des nombres en petit groupe : l'enfant annonce la quantité, retourne la carte et vérifie aussitôt s'il a juste. L'entraînement est court, répété et la validation immédiate.", null]],
-        elem: [["Calcul mental flash en début de journée : dix calculs sur l'ardoise, correction tout de suite, et chaque élève note son score pour voir ses progrès d'une semaine à l'autre.", null]]
-      } },
-    { id: "constr", t: "Constructivisme : agir pour comprendre", n: "acad", d: "Piaget",
-      corps: "<p>L'élève construit ses connaissances en agissant sur le réel. Quand ce qu'il pense ne marche plus, il doit réorganiser ses idées (accommodation). L'enseignant ne transmet pas le savoir tout fait : il conçoit des situations où les idées des élèves sont mises à l'épreuve.</p>",
-      dev: [["piaget", "Piaget : le constructivisme"], ["pia-meca", "Assimilation, accommodation, équilibration"]],
-      abc: ["enq", "pra"],
-      echos: [["Pour susciter la réflexion des élèves, les professeurs proposent des problèmes à leur portée. Ils guident les élèves afin que ceux-ci mettent en lien des situations vécues, fassent appel à leurs connaissances et élaborent des propositions de résolution. Les élèves sont accompagnés dans leurs tâtonnements et leurs essais de réponse.", "Cycle 1", "c1", 4]],
-      classe: {
-        mat: [["Coin eau en MS : avant de lâcher les objets dans la bassine, chacun dit s'il pense qu'ils vont flotter ou couler. On essaie, on trie, et on revient sur les prévisions qui n'ont pas marché.", null]],
-        elem: [["Au CE1, avant de parler de masse, les élèves rangent des objets du plus lourd au plus léger « à la main », puis vérifient avec une balance Roberval. L'écart entre la sensation et la mesure fait évoluer leurs idées.", null]]
-      } },
-    { id: "socio", t: "Socioconstructivisme : apprendre avec les autres", n: "acad", d: "Vygotski, Bruner ; Doise et Mugny",
-      corps: "<p>On apprend d'abord avec les autres, puis seul. Vygotski décrit la <strong>zone proximale de développement</strong> : ce que l'enfant réussit avec une aide, mais pas encore seul. Bruner décrit l'<strong>étayage</strong> de l'adulte. Doise et Mugny (années 1970-1980) montrent que la confrontation de points de vue entre pairs, le <strong>conflit sociocognitif</strong>, peut faire progresser chacun.</p>",
-      dev: [["vygotski", "Vygotski : le socioconstructivisme"], ["bruner", "Bruner : l'étayage"]],
-      abc: ["dis", "col"],
-      echos: [["Une place importante est donnée à l’observation et à l’imitation des autres élèves et des adultes. Les professeurs favorisent les interactions et créent les conditions d’une attention partagée et d’une prise en compte du point de vue de l’autre.", "Cycle 1", "c1", 4]],
-      classe: {
-        mat: [["En atelier de quatre en GS, deux enfants doivent se mettre d'accord pour trier des photos (vivant ou non vivant) avant de coller. L'enseignant écoute les arguments plutôt que de trancher.", null]],
-        elem: [["Des modalités diverses (recherche en binômes ou en groupes plus larges, entraide entre élèves, exposé d’une réponse ou d’une solution, débat autour de celle-ci, etc.) favorisent et renforcent l’engagement de chaque élève", "mathsC3", 4]]
-      } },
-    { id: "cogn", t: "Sciences cognitives : attention, mémoire, engagement", n: "edu", d: "Dehaene ; Sweller",
-      corps: "<p>Les guides Éduscol publiés depuis 2018 citent beaucoup Stanislas Dehaene. On résume souvent ses travaux par <strong>quatre piliers de l'apprentissage</strong> : l'attention, l'engagement actif, le retour d'information et la consolidation (<em>Apprendre !</em>, 2018 ; repère de manuel). La <strong>théorie de la charge cognitive</strong> (Sweller) ajoute que la mémoire de travail est limitée : d'où l'intérêt des automatismes et des documents épurés.</p>",
-      dev: [["cogn", "Éduscol : la psychologie cognitive prend le relais"], ["fe", "Les fonctions exécutives"]],
-      abc: ["pra", "acq"],
-      q: [["Un organisme passif n’apprend pas. Pour maximiser sa curiosité, il faut veiller à présenter à l’enfant des situations d’apprentissage qui ne soient ni trop faciles, ni trop difficiles : c’est le principe d’adaptation de l’enseignement au niveau de l’enfant.", "guideCP", 56],
-          ["les travaux de Stanislas Dehaene mettent en évidence les trois facteurs qui maximisent la mémoire : — la profondeur de l’encodage (faire travailler activement les élèves sur le sens de ce qu’ils apprennent) ; — l’alternance de périodes d’apprentissage et de test (mettre très souvent les élèves en situation d’épreuve) ; — la répétition à des intervalles espacés", "guideCP", 96],
-          ["Une tâche qui véhicule trop d’informations, dont certaines inutiles, peut entraîner des difficultés chez certains élèves.", "cnescoDiff", 9]],
-      echos: [["La maîtrise de ces automatismes allège la mémoire de travail de l’élève lors de la résolution de problèmes, lui permettant de se consacrer pleinement à des tâches cognitives de niveau supérieur comme la prise d’initiatives, la créativité ou le raisonnement.", "Cycle 3", "mathsC3", 3]],
-      classe: {
-        mat: [["Ils organisent des temps d’évocation des activités et des expériences collectives et individuelles afin de les aider à prendre conscience qu’apprendre à l’école, c’est remobiliser régulièrement les acquis antérieurs pour aller plus loin.", "c1", 5]],
-        elem: [["Au CM1, un « quiz du lundi » de cinq questions reprend des notions vues une semaine, un mois et un trimestre plus tôt : c'est la répétition espacée et le test fréquent, sans note.", null]]
-      } }
   ]},
 
   /* ---------------- 3. Concevoir ---------------- */
@@ -469,7 +423,6 @@ const ARBRE = {
       } },
     { id: "etayage", t: "L'étayage, et le risque de sur-étayage", n: "edu",
       corps: "<p>L'étayage vient de Bruner. Le vademecum de grande section met en garde contre l'excès inverse : trop guider l'élève lui retire le problème.</p>",
-      dev: [["br-etayage", "Les six fonctions de l'étayage"], ["vy-zpd", "La zone proximale de développement"]],
       q: [["sans pour autant que certains soient à ce point guidés qu’ils ne soient plus en situation de résolution de problème (sur-étayage).", "vadeGS", 18]],
       echos: [["Adapter, notamment avec les jeunes enfants, les formes de communication en fonction des situations et des activités (posture, interventions, consignes, conduites d'étayage).", "Référentiel 2013, P4", "ref2013", null]],
       classe: {
@@ -536,7 +489,6 @@ const ARBRE = {
   /* ---------------- 7. Rendre les élèves actifs ---------------- */
   { id: "actifs", t: "Comment rendre les élèves actifs ?", n: "nav",
     corps: "<p>Les pédagogies actives viennent de l'Éducation nouvelle, au début du 20e siècle : l'enfant apprend en agissant, en cherchant et en coopérant. Une précision s'impose d'abord : « actif » ne veut pas dire « qui bouge ».</p>",
-    dev: [["actives", "Pédagogies actives, Éducation nouvelle"]],
     e: [
     { id: "actif-sens", t: "Ce que « actif » veut dire", n: "edu",
       corps: "<p>Pour les sciences cognitives, l'engagement actif est d'abord mental : faire des hypothèses, reformuler, chercher. Une activité manuelle peut laisser l'esprit passif, et une écoute peut être très active.</p>",
@@ -544,12 +496,10 @@ const ARBRE = {
       echos: [["si la manipulation est un passage essentiel, la réussite d’une activité manipulatoire ne suffit cependant pas pour attester de la compréhension de la notion mathématique qui la sous-tend.", "Cycle 2", "mathsC2", 2]] },
     { id: "dewey", t: "Dewey et l'Éducation nouvelle", n: "form", d: "John Dewey (1859-1952)",
       corps: "<p>Dewey défend une école où l'on apprend par l'expérience, à partir de problèmes réels (<em>learning by doing</em>). Le mouvement de l'Éducation nouvelle réunit ensuite Decroly, Montessori, Freinet, Ferrière et d'autres. L'INSPÉ de Lille aborde les pédagogies actives dans son cours d'histoire de l'enseignement.</p>",
-      dev: [["dewey", "Dewey : learning by doing"], ["educnouv", "Freinet, Montessori, Decroly"]],
       q: [["Étude de l’évolution des méthodes pédagogiques réellement mises en œuvre dans les classes du primaire est à opérer, tout comme celle des tentatives de réformes au nom des « pédagogies actives ».", "lille", 14, "form"]],
       abc: ["enq", "pro"] },
     { id: "freinet", t: "Freinet : coopérer, s'exprimer, tâtonner", n: "form", d: "Célestin Freinet (1896-1966) ; ICEM",
       corps: "<p>Freinet invente des <strong>techniques</strong> plus qu'une méthode : texte libre, imprimerie et journal scolaire, correspondance, « Quoi de neuf ? », conseil de coopérative, plan de travail, fichiers autocorrectifs. En 1964, il les résume en 30 « invariants pédagogiques ». L'Institut coopératif de l'École moderne (ICEM) fait vivre ce mouvement.</p>",
-      dev: [["freinet", "Freinet"]],
       abc: ["pro", "col", "dis"],
       q: [["INVARIANT n° 24 : La vie nouvelle de l'Ecole suppose la coopération scolaire, c'est-à-dire la gestion par les usagers, l'éducateur compris, de la vie et du travail scolaire.", "icem", 1, "form"],
           ["La coopération est l'un des 5 piliers de la pédagogie Freinet, avec : • le tâtonnement expérimental • la méthode naturelle d'apprentissage • le travail individualisé • l'expression libre", "icem", 1, "form"]],
@@ -561,7 +511,6 @@ const ARBRE = {
       } },
     { id: "montessori", t: "Montessori : un milieu préparé", n: "acad", d: "Maria Montessori (1870-1952)",
       corps: "<p>Montessori, médecin, conçoit un <strong>environnement préparé</strong> avec un matériel autocorrectif : l'enfant choisit son activité, la répète autant qu'il veut et voit seul s'il a réussi. L'adulte observe et présente le matériel. Les « lettres rugueuses » et le « matériel sensoriel » sont les plus connus.</p><p>Au CRPE, mieux vaut parler d'<strong>inspiration</strong> montessorienne : une classe publique emprunte des principes et des outils, pas l'ensemble de la méthode.</p>",
-      dev: [["montessori", "Montessori"]],
       abc: ["pra", "enq"],
       echos: [["Ils veillent à diversifier les formes des exercices proposés en limitant le recours aux fiches.", "Cycle 1", "c1", 4]],
       classe: {
@@ -570,7 +519,6 @@ const ARBRE = {
       } },
     { id: "decroly", t: "Decroly : centres d'intérêt et approche globale", n: "acad", d: "Ovide Decroly (1871-1932)",
       corps: "<p>Decroly organise les apprentissages autour de <strong>centres d'intérêt</strong> liés aux besoins de l'enfant (se nourrir, se protéger…), selon trois temps : observer, associer, exprimer. Il défend une entrée <strong>globale</strong> dans la lecture, à partir de phrases qui ont du sens pour l'enfant. C'est cet héritage que les guides récents critiquent (branche « Les débats »).</p>",
-      dev: [["decroly", "Decroly"]],
       abc: ["enq", "pro"],
       classe: {
         mat: [["En MS, un mois autour de « la boulangerie » : visite, recette du pain, imagier, coin jeu symbolique boulangerie, comptine. Le thème relie les domaines.", null]],
@@ -600,7 +548,6 @@ const ARBRE = {
     corps: "<p>Le programme du cycle 1 décrit quatre manières d'apprendre propres à la maternelle. Elles structurent la conception des situations, et chacune correspond à des types ABC différents.</p>",
     e: [
     { id: "m-jouer", t: "Apprendre en jouant", n: "off",
-      dev: [["jeu", "Le jeu comme objet d'étude"]],
       abc: ["enq", "pra", "col"],
       q: [["Les jeux proposés par les professeurs sont structurés et visent explicitement des apprentissages spécifiques.", "c1", 4, "off"],
           ["Dans un jeu libre, l’enfant choisit quand et comment il joue, dans un cadre temporel et spatial imparti. Il prend ses propres décisions.", "jeu", 7, "edu"]],
@@ -631,8 +578,7 @@ const ARBRE = {
         elem: []
       } },
     { id: "kergomard", t: "Pauline Kergomard et l'école maternelle", n: "acad", d: "Pauline Kergomard (1838-1925)",
-      corps: "<p>Inspectrice générale, Pauline Kergomard transforme les « salles d'asile » en <strong>écoles maternelles</strong> (décret de 1881). Elle combat les exercices scolaires imposés aux petits et défend le jeu, le mouvement et la bienveillance. On lui attribue la formule « le jeu, c'est le travail de l'enfant ».</p>",
-      dev: [["jeu", "Le jeu comme objet d'étude"]] },
+      corps: "<p>Inspectrice générale, Pauline Kergomard transforme les « salles d'asile » en <strong>écoles maternelles</strong> (décret de 1881). Elle combat les exercices scolaires imposés aux petits et défend le jeu, le mouvement et la bienveillance. On lui attribue la formule « le jeu, c'est le travail de l'enfant ».</p>" },
     { id: "m-ensemble", t: "Apprendre ensemble et vivre ensemble", n: "off",
       abc: ["col", "dis"],
       q: [["Elle structure les apprentissages autour d’un enjeu de formation central pour les élèves : « Apprendre ensemble et vivre ensemble ».", "c1", 5, "off"]] }
@@ -830,9 +776,6 @@ function rendreFiche() {
       if (elem.length) h += `<h4>Élémentaire</h4>${elem.map(exemple).join("")}`;
       h += `</div>`;
     }
-  }
-  if (n.dev && n.dev.length) {
-    h += `<h3>Dans la carte du développement</h3><ul class="srcs">${n.dev.map(([id, t]) => `<li><a href="${DEV}#${id}" target="_blank" rel="noopener">${echap(t)} ↗</a></li>`).join("")}</ul>`;
   }
   if (n.e && n.e.length) {
     h += `<h3>Sous-thèmes</h3><div class="enfants">${n.e.map(c => `<button type="button" data-id="${c.id}">${c.n === "nav" ? "" : pastille(c.n, 8)}${echap(c.t)}</button>`).join("")}</div>`;
