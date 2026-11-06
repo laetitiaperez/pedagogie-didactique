@@ -1,6 +1,6 @@
 # Pédagogie et didactique à l'école primaire — carte mentale (CRPE)
 
-Carte mentale interactive des techniques didactiques et pédagogiques, organisée par questions du métier : concevoir une séance (dont ABC Learning Design), que faire de l'erreur, différencier, évaluer, rendre les élèves actifs (pédagogies actives), apprendre à l'école maternelle, et les débats.
+Carte mentale interactive des techniques didactiques et pédagogiques, organisée par questions du métier : concevoir une séance (dont ABC Learning Design), que faire de l'erreur, différencier, évaluer, rendre les élèves actifs (pédagogies actives), apprendre à l’école maternelle, les figures et l’histoire de l’école, et les débats. Chaque technique est présentée avec sa théorie associée.
 
 En ligne : https://laetitiaperez.github.io/pedagogie-didactique/
 
