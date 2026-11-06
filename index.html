@@ -283,6 +283,14 @@ const ARBRE = {
   { id: "concevoir", t: "Comment concevoir une séance ou une séquence ?", n: "nav",
     corps: "<p>La didactique étudie ce qui se passe entre un savoir, un élève et un enseignant, discipline par discipline. Cette branche réunit les outils de conception : d'où vient le savoir enseigné, comment construire une situation, comment structurer une séance, et une méthode de planification venue du supérieur, ABC Learning Design.</p>",
     e: [
+    { id: "preparer", t: "Préparer sa classe : le vocabulaire", n: "acad", d: "Programmation, progression, séquence, séance",
+      th: "Pédagogie par objectifs (Tyler, puis Mager et Bloom) : partir de ce que l'élève doit savoir faire à la fin, puis organiser les étapes pour y parvenir.",
+      corps: "<ul><li><strong>Didactique</strong> : la réflexion sur le savoir (quoi enseigner, dans quel ordre, quels obstacles). <strong>Pédagogie</strong> : la réflexion sur la conduite de la classe (comment faire apprendre ce groupe-là).</li><li><strong>Programmation</strong> : répartir les contenus du programme sur les années du cycle et les périodes.</li><li><strong>Progression</strong> : ordonner des activités graduées pour qu'une compétence soit acquise.</li><li><strong>Séquence</strong> : ensemble de séances articulées autour d'objectifs des programmes (terminologie de l'éducation, BOEN n° 35 du 17 septembre 1992). <strong>Séance</strong> : période d'enseignement qui vise un objectif fixé à son propre terme.</li><li><strong>Prérequis</strong> : ce qui est « exigible pour aborder de nouveaux contenus » (Astolfi, <em>L'erreur, un outil pour enseigner</em>, 1997).</li></ul><p>Une séance suit souvent des phases : mise en situation, recherche, mise en commun, institutionnalisation (trace écrite), entraînement, évaluation. Alain Rieunier (<em>Préparer un cours</em>, ESF) insiste sur ce que doit prévoir une préparation : motiver, présenter des contenus rigoureux, permettre l'appropriation progressive, évaluer et organiser des recours pour les élèves en difficulté.</p>",
+      echos: [["Savoir préparer les séquences de classe et, pour cela, définir des programmations et des progressions ; identifier les objectifs, contenus, dispositifs, obstacles didactiques, stratégies d'étayage, modalités d'entraînement et d'évaluation.", "Référentiel 2013, P3", "ref2013", null]],
+      classe: {
+        mat: [["En MS, une séquence de 5 séances sur le tri de formes : découverte libre du matériel, tri selon une consigne, tri inventé par l'enfant, jeu du « intrus », trace photographiée dans le cahier.", null]],
+        elem: [["Au CM1, la fiche de séance indique l'objectif (« comparer des fractions de même dénominateur »), les prérequis (lire une fraction), les phases avec leur durée, les modalités (seul, binôme, collectif) et ce qui sera noté dans le cahier de leçons.", null]]
+      } },
     { id: "transpo", th: "Didactique des mathématiques (Chevallard), à partir des travaux du sociologue Michel Verret sur les savoirs scolaires : tout savoir enseigné est une reconstruction du savoir de référence.", t: "Transposition didactique", n: "acad", d: "Verret (1975), Chevallard (1985)",
       corps: "<p>Le savoir enseigné n'est pas le savoir des chercheurs. Chevallard décrit une chaîne : <strong>savoir savant</strong>, puis <strong>savoir à enseigner</strong> (celui des programmes), puis <strong>savoir enseigné</strong> (celui de la classe). À chaque étape, le savoir est découpé, simplifié et mis en ordre.</p><p>Exemple : la « règle » de l'accord du participe passé ou le schéma du cycle de l'eau sont des savoirs transposés. Savoir le dire permet d'en expliquer les limites aux élèves plus tard.</p>",
       echos: [["Connaître de manière approfondie sa discipline ou ses domaines d'enseignement. En situer les repères fondamentaux, les enjeux épistémologiques et les problèmes didactiques.", "Référentiel 2013, P1", "ref2013", null]],
@@ -307,7 +315,7 @@ const ARBRE = {
         mat: [["En MS, pour la collation, un enfant doit dire à la cantine combien de gobelets apporter, sans les compter devant les autres. Il doit trouver une façon de garder la quantité en mémoire (doigts, dessin, nombre).", null]],
         elem: [["Au CE2, « Combien de tables faut-il pour la fête de l'école ? », avec le nombre d'invités et de places par table. Les élèves cherchent avant toute leçon sur la division.", null]]
       } },
-    { id: "explicite", th: "Cognitivisme : la mémoire de travail est limitée, d'où le découpage et la pratique guidée (théorie de la charge cognitive, Sweller). Recherches sur l'efficacité de l'enseignement (Rosenshine).", t: "L'enseignement explicite", n: "edu", d: "Rosenshine ; Gauthier, Bissonnette ; CSEN (2022)",
+    { id: "explicite", th: "Cognitivisme : la mémoire de travail est limitée, d'où le découpage et la pratique guidée (théorie de la charge cognitive, Sweller). Recherches sur l'efficacité de l'enseignement (Rosenshine). Le modelage s'appuie aussi sur l'apprentissage par observation d'un modèle (Bandura).", t: "L'enseignement explicite", n: "edu", d: "Rosenshine ; Gauthier, Bissonnette ; CSEN (2022)",
       corps: "<p>Né de la recherche sur l'efficacité de l'enseignement, l'enseignement explicite structure la séance du simple au complexe. La synthèse du CSEN distingue plusieurs phases : une <strong>ouverture</strong> (objectif, rappel des acquis), le <strong>modelage</strong> (« Je fais » : l'enseignant montre en pensant à voix haute), la <strong>pratique guidée</strong> (« Nous faisons ensemble »), puis la pratique autonome et la consolidation.</p><p>Le CSEN insiste : ce n'est ni un cours magistral ni un enseignement frontal, et l'élève y est actif.</p>",
       abc: ["acq", "pra"],
       q: [["Il s’agit d’un enseignement structuré, où l’activité de l’enseignant – essentielle – a pour but de favoriser, par des explications claires, des démonstrations et une pratique guidée, un engagement actif des élèves et une meilleure compréhension de l’objet d’apprentissage.", "csen", 3],
@@ -448,6 +456,14 @@ const ARBRE = {
       classe: {
         mat: [["Pictogrammes de l'emploi du temps affichés à hauteur d'enfant pour toute la classe, et pas seulement pour l'élève qui en a besoin.", null]],
         elem: [["Au CM1, la consigne du problème est lue à voix haute pour tous quand l'objectif n'est pas la lecture : cela lève l'obstacle du décodage sans désigner personne.", null]]
+      } },
+    { id: "cua", t: "Burns et la conception universelle des apprentissages", n: "acad", d: "Robert B. Burns (1972) ; CAST (années 1990)",
+      th: "Burns : la diversité des élèves est la règle, pas l'exception. La CUA s'appuie sur les neurosciences : trois réseaux cérébraux, pour le pourquoi, le quoi et le comment de l'apprentissage.",
+      corps: "<p>Robert B. Burns formule sept postulats souvent cités en formation : il n'y a pas deux apprenants qui progressent à la même vitesse, qui soient prêts à apprendre en même temps, qui utilisent les mêmes techniques d'étude, qui résolvent les problèmes de la même manière, qui possèdent le même répertoire de comportements, le même profil d'intérêts, ni qui soient motivés pour atteindre les mêmes buts.</p><p>La <strong>conception universelle des apprentissages</strong> (CUA) en tire une méthode : prévoir la diversité <em>dès la conception</em>, plutôt que d'adapter après coup. Elle propose trois principes : offrir plusieurs moyens d'<strong>engagement</strong> (s'engager), de <strong>représentation</strong> (comprendre) et d'<strong>action et d'expression</strong> (agir).</p>",
+      abc: ["acq", "pro"],
+      classe: {
+        mat: [["Pour la comptine du jour : l'affiche illustrée, l'enregistrement audio et les gestes associés sont proposés à tous ; chaque enfant peut montrer qu'il la connaît en la disant, en la mimant ou en remettant les images dans l'ordre.", null]],
+        elem: [["Au CE2, le texte documentaire existe en version papier, en version audio et avec un lexique illustré ; pour rendre compte, l'élève choisit entre un résumé écrit, une carte mentale ou un enregistrement.", null]]
       } }
   ]},
 
@@ -499,6 +515,15 @@ const ARBRE = {
       corps: "<p>Pour les sciences cognitives, l'engagement actif est d'abord mental : faire des hypothèses, reformuler, chercher. Une activité manuelle peut laisser l'esprit passif, et une écoute peut être très active.</p>",
       q: [["Un engagement actif implique de générer des hypothèses ou des modèles mentaux, de reformuler en mots ou en pensées qui font sens pour soi, etc. (Dehaene, 2018).", "csen", 6]],
       echos: [["si la manipulation est un passage essentiel, la réussite d’une activité manipulatoire ne suffit cependant pas pour attester de la compréhension de la notion mathématique qui la sous-tend.", "Cycle 2", "mathsC2", 2]] },
+    { id: "motiver", t: "Motiver les élèves", n: "acad",
+      th: "Théorie de l'autodétermination (Deci et Ryan) : autonomie, compétence et appartenance nourrissent la motivation intrinsèque. Sentiment d'efficacité personnelle (Bandura). Hiérarchie des besoins (Maslow).",
+      corps: "<p>Un élève s'engage quand il voit le sens de la tâche, se sent capable de la réussir et se sent appartenir au groupe. Les récompenses extérieures (bons points, images) peuvent aider à démarrer mais risquent de remplacer l'intérêt pour l'activité.</p>",
+      abc: ["col", "pro"],
+      echos: [["Les professeurs veillent alors à leur expliquer l’objectif de ce qu’ils sont en train d’apprendre, à leur faire comprendre le sens des efforts demandés et à leur faire percevoir les progrès réalisés.", "Cycle 1", "c1", 4]],
+      classe: {
+        mat: [["Un tableau de responsabilités (arroser la plante, distribuer les gobelets) qui change chaque semaine, et un choix entre deux ateliers pour le même objectif : l'enfant décide de l'ordre.", null]],
+        elem: [["Au CM2, chaque élève fixe en début de période un objectif personnel en calcul mental, voit sa courbe de progrès et choisit son niveau de défi le vendredi.", null]]
+      } },
     { id: "dewey", th: "Pragmatisme de Dewey : la pensée naît d'un problème réel et se construit par l'expérience.", t: "Dewey et l'Éducation nouvelle", n: "form", d: "John Dewey (1859-1952)",
       corps: "<p>Dewey défend une école où l'on apprend par l'expérience, à partir de problèmes réels (<em>learning by doing</em>). Le mouvement de l'Éducation nouvelle réunit ensuite Decroly, Montessori, Freinet, Ferrière et d'autres. L'INSPÉ de Lille aborde les pédagogies actives dans son cours d'histoire de l'enseignement.</p>",
       q: [["Étude de l’évolution des méthodes pédagogiques réellement mises en œuvre dans les classes du primaire est à opérer, tout comme celle des tentatives de réformes au nom des « pédagogies actives ».", "lille", 14, "form"]],
@@ -582,11 +607,49 @@ const ARBRE = {
         mat: [["Une comptine dite chaque jour pendant deux semaines, d'abord avec les gestes de l'adulte, puis par les enfants seuls, puis reprise un mois plus tard pour vérifier qu'elle est restée.", null]],
         elem: []
       } },
-    { id: "kergomard", t: "Pauline Kergomard et l'école maternelle", n: "acad", d: "Pauline Kergomard (1838-1925)",
-      corps: "<p>Inspectrice générale, Pauline Kergomard transforme les « salles d'asile » en <strong>écoles maternelles</strong> (décret de 1881). Elle combat les exercices scolaires imposés aux petits et défend le jeu, le mouvement et la bienveillance. On lui attribue la formule « le jeu, c'est le travail de l'enfant ».</p>" },
+    { id: "kergomard", t: "Des salles d'asile à l'école maternelle", n: "acad", d: "Marie Pape-Carpantier (1815-1878), Pauline Kergomard (1838-1925)",
+      corps: "<p>Au 19e siècle, les jeunes enfants des familles ouvrières sont accueillis dans des <strong>salles d'asile</strong>. Marie Pape-Carpantier, qui en dirige une puis forme leurs directrices, y introduit des « leçons de choses », des jeux et des activités manuelles.</p><p>Inspectrice générale, Pauline Kergomard transforme les salles d'asile en <strong>écoles maternelles</strong> (décret du 2 août 1881). Elle combat les exercices scolaires imposés aux petits et défend le jeu, le mouvement et la bienveillance. On lui attribue la formule « le jeu, c'est le travail de l'enfant ».</p>" },
+    { id: "rythmes", t: "Rythmes de l'enfant et emploi du temps", n: "acad", d: "Chronopsychologie",
+      th: "Chronobiologie et chronopsychologie (Testu, Montagner ; à Strasbourg, Sonia Lorant-Royer) : l'attention et les performances varient au cours de la journée et de la semaine.",
+      corps: "<p>La vigilance des enfants est en général plus basse en tout début de matinée et juste après le repas, et meilleure en fin de matinée. Les recommandations pour l'emploi du temps de maternelle en tirent quelques principes : accueil échelonné, apprentissages exigeants en fin de matinée, temps de repos ou de sieste respecté, alternance entre activités collectives et individuelles, calmes et motrices.</p>",
+      echos: [["Les apprentissages des jeunes enfants s’inscrivent dans un temps long et leurs progrès sont rarement linéaires.", "Cycle 1", "c1", 4]],
+      classe: {
+        mat: [["En PS, après la sieste, des ateliers libres et calmes (puzzles, coin livres) plutôt qu'une séance collective de langage ; la séance de phonologie est placée en fin de matinée.", null]],
+        elem: [["Au CE1, la dictée et la résolution de problèmes en fin de matinée, les activités artistiques ou l'EPS en début d'après-midi.", null]]
+      } },
     { id: "m-ensemble", th: "Socioconstructivisme : on apprend d'abord avec les autres, puis seul.", t: "Apprendre ensemble et vivre ensemble", n: "off",
       abc: ["col", "dis"],
       q: [["Elle structure les apprentissages autour d’un enjeu de formation central pour les élèves : « Apprendre ensemble et vivre ensemble ».", "c1", 5, "off"]] }
+  ]},
+
+  /* ---------------- Figures ---------------- */
+  { id: "figures", t: "Figures et histoire de l'école", n: "nav",
+    corps: "<p>Quelques noms à savoir situer à l'oral. Montessori, Freinet, Decroly et Dewey sont dans la branche « Comment rendre les élèves actifs ? » ; Kergomard dans la branche maternelle.</p>",
+    e: [
+    { id: "socrate", t: "Socrate : la maïeutique", n: "acad", d: "Vers 470-399 av. J.-C.",
+      th: "La connaissance est déjà là, en germe : le maître l'aide à « accoucher » par des questions (maïeutique).",
+      corps: "<p>Socrate n'expose pas un savoir : il interroge. Il commence par reconnaître qu'il ne sait rien, puis conduit son interlocuteur, question après question, à trouver lui-même la réponse ou à voir les contradictions de son opinion. Son élève Platon en rapporte des exemples (le <em>Ménon</em>).</p>",
+      abc: ["dis", "enq"],
+      classe: {
+        mat: [["Devant un objet mystère, l'enseignant ne donne pas le nom : « À quoi ça peut servir ? Pourquoi tu penses ça ? Et si on essayait ? »", null]],
+        elem: [["Au CM, un débat à visée philosophique (« Peut-on être ami avec tout le monde ? ») où l'enseignant ne donne pas son avis mais relance par des questions.", null]]
+      } },
+    { id: "rousseau", t: "Rousseau : Émile ou De l'éducation", n: "acad", d: "Jean-Jacques Rousseau (1712-1778), 1762",
+      th: "L'enfance a sa propre manière de penser ; on apprend par l'expérience et la nécessité plus que par les livres. Rousseau est un précurseur de l'Éducation nouvelle.",
+      corps: "<p>Dans <em>Émile</em>, Rousseau décrit l'éducation d'un enfant fictif. Il défend une éducation qui suit le développement naturel de l'enfant, par l'expérience directe et la curiosité. Dans la préface, il invite les éducateurs à mieux étudier leurs élèves, car « très assurément vous ne les connaissez point ».</p>" },
+    { id: "condorcet", t: "Condorcet : l'instruction publique", n: "acad", d: "Nicolas de Condorcet (1743-1794)",
+      th: "Philosophie des Lumières : instruire pour rendre chacun capable de juger par lui-même et d'exercer ses droits.",
+      corps: "<p>Dans les <em>Cinq mémoires sur l'instruction publique</em> (1791) et son Rapport de 1792, Condorcet distingue <strong>instruire</strong> (transmettre des savoirs et former le jugement) et <strong>éduquer</strong> (les valeurs morales et religieuses, qui relèvent des familles). L'instruction publique doit être universelle, gratuite et indépendante des croyances : c'est une source de la laïcité scolaire.</p>" },
+    { id: "ferry", t: "Les lois Ferry", n: "acad", d: "1881-1882",
+      th: "Projet républicain : former des citoyens par une école commune, gratuite, obligatoire et laïque.",
+      corps: "<ul><li>Loi du 16 juin 1881 : gratuité de l'enseignement primaire public.</li><li>Décret du 2 août 1881 : création des écoles maternelles.</li><li>Loi du 28 mars 1882 : instruction obligatoire de 6 à 13 ans et enseignement public laïque (l'instruction morale et civique remplace l'instruction religieuse).</li></ul><p>En 1932, le ministère de l'Instruction publique devient ministère de l'Éducation nationale.</p>" },
+    { id: "meirieu", t: "Meirieu : connaître l'élève autant que le savoir", n: "acad", d: "Philippe Meirieu (né en 1949) ; Michel Develay",
+      th: "Pédagogie différenciée et éducabilité : tout élève peut apprendre, et c'est à l'enseignant de chercher les points d'appui qui le lui permettent.",
+      corps: "<p>Philippe Meirieu (<em>Apprendre… oui, mais comment</em>, 1987 ; <em>La pédagogie entre le dire et le faire</em>, 1995) défend la pédagogie différenciée et la situation-problème. Avec Michel Develay (<em>Émile, reviens vite… ils sont devenus fous</em>, ESF, 1992), il reprend une formule souvent citée : pour enseigner les mathématiques à John, il faut connaître John autant que les mathématiques.</p>",
+      s: ["lille"] },
+    { id: "pennac", t: "Pennac : le cancre", n: "acad", d: "Daniel Pennac, Chagrin d'école (2007)",
+      th: "Rapport au savoir et estime de soi : l'échec scolaire se vit d'abord comme une honte, que l'enseignant peut défaire.",
+      corps: "<p>Ancien « cancre » devenu professeur, Pennac raconte son expérience de l'échec scolaire. Il soutient que l'élève qui résiste à l'enseignement est le plus normal de tous, puisque c'est lui qui justifie le métier de professeur. Un livre souvent cité à l'oral pour parler de la difficulté scolaire.</p>" }
   ]},
 
   /* ---------------- 9. Débats ---------------- */
